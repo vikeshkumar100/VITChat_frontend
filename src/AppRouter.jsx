@@ -1,28 +1,30 @@
 import {createBrowserRouter,createRoutesFromElements,Route,} from "react-router-dom";
-import PrivateLayout from "./layout/PrivateLayout";
 import Home from "./pages/Home/Home";
 import Contact from "./pages/Contact/Contact";
 import About from "./pages/About/About";
 import GlobalChat from "./pages/GlobalChat/GlobalChat";
-import Landing from "./pages/Landing/Landing";
-import PublicLayout from "./layout/PublicLayout";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import MainLayout from "./layout/MainLayout";
+import Login from "./pages/Login/Login";
+import ChatBot from "./pages/Chatbot/Chatbot";
+import Error from "./pages/Error/Error";
 
 const Router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      {/* public routes  */}
-      <Route path="landing" element={<PublicLayout />}>
-        <Route index element={<Landing />} />
-        <Route path="about" element={<About />} />
-      </Route>
-
-      {/* private routes  */}
-      <Route path="/" element={<PrivateLayout />}>
+      <Route path="/" element={<MainLayout />}>
+        {/* public routes  */}
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
-        <Route path="global-chat" element={<GlobalChat />} />
-        <Route path="contact" element={<Contact />} />
+        <Route path="chat-bot" element={<ChatBot />} />
+
+        {/* private routes  */}
+        <Route path="global-chat" element={<ProtectedRoute><GlobalChat /></ProtectedRoute>} />
+        <Route path="contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
       </Route>
+
+      <Route path="login" element={<Login/>}/>
+      <Route path="*" element={<Error/>} />
     </>
   )
 );
