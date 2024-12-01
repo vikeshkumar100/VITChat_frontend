@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Error = () => {
   return (
-    <div className="h-screen flex flex-col justify-center items-center gap-6">
+    <div className="h-screen flex flex-col justify-center items-center gap-6 bg-black text-white">
       <h4 className="font-bold text-9xl">404 Not Found</h4>
       <Link
         to="/"
