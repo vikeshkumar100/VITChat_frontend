@@ -1,4 +1,8 @@
-import {createBrowserRouter,createRoutesFromElements,Route,} from "react-router-dom";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+} from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Contact from "./pages/Contact/Contact";
 import About from "./pages/About/About";
@@ -8,23 +12,30 @@ import MainLayout from "./layout/MainLayout";
 import Login from "./pages/Login/Login";
 import ChatBot from "./pages/Chatbot/Chatbot";
 import Error from "./pages/Error/Error";
+import ChatLayout from "./layout/ChatLayout";
+import RandomChat from "./pages/Random-chat/RandomChat";
 
 const Router = createBrowserRouter(
   createRoutesFromElements(
     <>
+      {/* public routes  */}
       <Route path="/" element={<MainLayout />}>
-        {/* public routes  */}
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
+      </Route>
+      
+      {/* protected routes */}
+      <Route path="chat" element={<ProtectedRoute><ChatLayout /></ProtectedRoute>}>
+        <Route index element={<GlobalChat />} />
         <Route path="chat-bot" element={<ChatBot />} />
-
-        {/* private routes  */}
-        <Route path="global-chat" element={<ProtectedRoute><GlobalChat /></ProtectedRoute>} />
-        <Route path="contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+        <Route path="random-chat" element={<RandomChat />} />    
       </Route>
 
-      <Route path="login" element={<Login/>}/>
-      <Route path="*" element={<Error/>} />
+      {/* login route  */}
+      <Route path="login" element={<Login />} />
+      <Route path="*" element={<Error />} />
+
     </>
   )
 );
