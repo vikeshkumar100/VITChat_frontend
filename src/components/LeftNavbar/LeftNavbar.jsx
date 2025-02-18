@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import ChatButton from "../Buttons/chatButton";
+import ChatButton from "../Buttons/ChatButton";
 
 const LeftNavbar = () => {
   return (
