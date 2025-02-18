@@ -13,7 +13,7 @@ import Login from "./pages/Login/Login";
 import ChatBot from "./pages/Chatbot/Chatbot";
 import Error from "./pages/Error/Error";
 import ChatLayout from "./layout/ChatLayout";
-import RandomChat from "./pages/Random-chat/RandomChat";
+import RandomChat from "./pages/RandomChat/RandomChat";
 
 const Router = createBrowserRouter(
   createRoutesFromElements(

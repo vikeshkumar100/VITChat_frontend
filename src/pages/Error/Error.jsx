@@ -1,10 +1,12 @@
+import Header from "@/components/Header/Header";
 import React from "react";
 import { Link } from "react-router-dom";
 
 const Error = () => {
   return (
     <>
-      <div className="w-full bg-red-400 text-2xl text-center">VITCHAT</div>
+      {/* header  */}
+      <Header />
       <div className="h-screen flex flex-col justify-center items-center gap-6 bg-black text-white">
         <h4 className="font-bold text-9xl">404 Not Found</h4>
         <Link

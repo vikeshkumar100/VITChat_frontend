@@ -28,8 +28,9 @@ const Navbar = () => {
         </div>
 
         {/* right */}
-        <div>
+        <div className="flex flex-row gap-4 items-center">
           <ModeToggle />
+          <NavLink to="/login">Login</NavLink>
         </div>
       </div>
     </>
