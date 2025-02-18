@@ -13,7 +13,7 @@ import ChatButton from "../Buttons/ChatButton";
 const LeftNavbar = () => {
   return (
     <>
-      <div className="fixed flex flex-col justify-between md:h-screen w-full h-screen md:pt-16 md:w-56 pt-[7vh] bg-gray-800">
+      <div className="fixed flex flex-col justify-between md:h-screen w-full md:pt-16 md:w-56 pt-[7vh] bg-gray-800">
         {/* upper  */}
         <div>
           <ul className="flex flex-row gap-3 justify-around w-full items-center p-1 md:flex-col">
