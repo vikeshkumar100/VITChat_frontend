@@ -14,6 +14,7 @@ import ChatBot from "./pages/Chatbot/Chatbot";
 import Error from "./pages/Error/Error";
 import ChatLayout from "./layout/ChatLayout";
 import RandomChat from "./pages/RandomChat/RandomChat";
+import ChatHome from "./pages/ChatHome/ChatHome";
 
 const Router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,7 +28,8 @@ const Router = createBrowserRouter(
       
       {/* protected routes */}
       <Route path="chat" element={<ProtectedRoute><ChatLayout /></ProtectedRoute>}>
-        <Route index element={<GlobalChat />} />
+        <Route index element={<ChatHome />} />
+        <Route path="global-chat" element={<GlobalChat />} />
         <Route path="chat-bot" element={<ChatBot />} />
         <Route path="random-chat" element={<RandomChat />} />    
       </Route>
