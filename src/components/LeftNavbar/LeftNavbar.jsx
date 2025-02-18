@@ -9,6 +9,7 @@ import {
 import React from "react";
 import { NavLink } from "react-router-dom";
 import ChatButton from "../Buttons/ChatButton";
+import ProfileSheet from "../ProfileSheet/ProfileSheet";
 
 const LeftNavbar = () => {
   return (
@@ -21,12 +22,12 @@ const LeftNavbar = () => {
               <ChatButton path="/" Icon={House} text="Home" />
             </li>
 
-            <li className="hidden md:flex flex-row w-full p-3 text-center text-lg text-gray-400 items-center gap-2">
-              <div className="border-2 border-gray-600 rounded-xl h-0 w-full"></div>
+            <li className="flex flex-row w-full md:p-3 text-center text-lg text-gray-400 items-center gap-2">
+              <div className="hidden md:block border-2 border-gray-600 rounded-xl h-0 w-full"></div>
               <NavLink to="/chat" className="text-blue-400 font-semibold">
                 Chat
               </NavLink>
-              <div className="border-2 border-gray-600 rounded-xl h-0 w-full"></div>
+              <div className="hidden md:block border-2 border-gray-600 rounded-xl h-0 w-full"></div>
             </li>
 
             <li className="w-full flex">
@@ -57,14 +58,9 @@ const LeftNavbar = () => {
         <div className="pb-2 flex flex-col md:flex-row gap-2 px-1">
 
           {/* profile button */}
-          <NavLink
-            to="/"
-            className="w-full p-2 text-lg rounded-lg cursor-pointer flex justify-center md:justify-normal gap-3 items-center bg-blue-600/70">
-            <span className="w-5 h-5">
-            <UserRoundPen />
-            </span>
-            <span className="hidden md:block">Profile</span>
-          </NavLink>
+          <div>
+            <span><ProfileSheet/></span>
+          </div>
 
           {/* logout button  */}
           <NavLink
