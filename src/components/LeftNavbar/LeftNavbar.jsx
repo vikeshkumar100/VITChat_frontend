@@ -12,11 +12,11 @@ import ChatButton from "../Buttons/ChatButton";
 
 const LeftNavbar = () => {
   return (
-    <>
-      <div className="fixed flex flex-col justify-between md:h-screen w-full md:pt-16 md:w-56 pt-[7vh] bg-gray-800">
+    <> 
+      <div className="fixed flex flex-col justify-between md:h-screen w-12 h-screen md:pt-16 md:w-56 pt-[7vh] bg-gray-800">
         {/* upper  */}
         <div>
-          <ul className="flex flex-row gap-3 justify-around w-full items-center p-1 md:flex-col">
+          <ul className="flex flex-col gap-3 justify-around w-full items-center p-1">
             <li className="w-full flex">
               <ChatButton path="/" Icon={House} text="Home" />
             </li>
@@ -54,7 +54,7 @@ const LeftNavbar = () => {
         </div>
 
         {/* lower  */}
-        <div className="pb-2 flex gap-2">
+        <div className="pb-2 flex flex-col md:flex-row gap-2 px-1">
 
           {/* profile button */}
           <NavLink
