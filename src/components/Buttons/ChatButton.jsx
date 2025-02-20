@@ -7,12 +7,12 @@ const ChatButton = (props) => {
     <NavLink
       to={path}
       className={({ isActive }) =>
-        `text-white w-full p-2 text-lg rounded-lg cursor-pointer flex justify-center md:justify-normal gap-3 items-center border border-gray-500/20
+        `text-white w-full p-2 text-lg rounded-lg cursor-pointer flex justify-center lg:justify-normal gap-3 items-center border border-gray-500/20
     ${isActive ? "bg-gray-600 border-b-2 border-b-blue-600" : "bg-gray-800"}`
       }
     >
       {Icon && <Icon className="w-5 h-5" />}
-      <span className="hidden md:block">{text}</span>
+      <span className="hidden lg:block">{text}</span>
     </NavLink>
   );
 };

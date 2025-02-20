@@ -4,17 +4,34 @@ import {
   LogOut,
   MessageSquareDot,
   Shuffle,
-  UserRoundPen,
 } from "lucide-react";
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import ChatButton from "../Buttons/ChatButton";
 import ProfileSheet from "../ProfileSheet/ProfileSheet";
 
 const LeftNavbar = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    localStorage.getItem("user") !== null
+  );
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setIsAuthenticated(false);
+    navigate("/");
+  };
+
+  useEffect(() => {
+    if (!localStorage.getItem("user")) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
-    <> 
-      <div className="fixed flex flex-col justify-between md:h-screen w-12 h-screen md:pt-16 md:w-56 pt-[7vh] bg-gray-800">
+    <>
+      <div className="fixed flex flex-col gap-2 lg:justify-between w-12 h-screen md:pt-16 lg:w-56 pt-[7vh] bg-gray-800">
         {/* upper  */}
         <div>
           <ul className="flex flex-col gap-3 justify-around w-full items-center p-1">
@@ -22,12 +39,12 @@ const LeftNavbar = () => {
               <ChatButton path="/" Icon={House} text="Home" />
             </li>
 
-            <li className="flex flex-row w-full md:p-3 text-center text-lg text-gray-400 items-center gap-2">
-              <div className="hidden md:block border-2 border-gray-600 rounded-xl h-0 w-full"></div>
+            <li className="flex flex-row w-full lg:p-3 text-center text-lg text-gray-400 items-center gap-2">
+              <div className="hidden lg:block border-2 border-gray-600 rounded-xl h-0 w-full"></div>
               <NavLink to="/chat" className="text-blue-400 font-semibold">
                 Chat
               </NavLink>
-              <div className="hidden md:block border-2 border-gray-600 rounded-xl h-0 w-full"></div>
+              <div className="hidden lg:block border-2 border-gray-600 rounded-xl h-0 w-full"></div>
             </li>
 
             <li className="w-full flex">
@@ -55,22 +72,28 @@ const LeftNavbar = () => {
         </div>
 
         {/* lower  */}
-        <div className="pb-2 flex flex-col md:flex-row gap-2 px-1">
-
+        <div className="pb-2 flex flex-col lg:flex-row gap-2 py-3 px-1 border-t-2 border-gray-600 ">
           {/* profile button */}
           <div>
-            <span><ProfileSheet/></span>
+            <span>
+              <ProfileSheet
+                name={user.name}
+                email={user.email}
+                image={user.image}
+              />
+            </span>
           </div>
 
           {/* logout button  */}
-          <NavLink
-            to="/"
-            className="w-full p-2 text-lg rounded-lg cursor-pointer flex justify-center md:justify-normal gap-3 items-center bg-red-600/70">
+          <button
+            onClick={handleLogout}
+            className="w-full p-2 text-lg rounded-lg cursor-pointer flex justify-center lg:justify-normal gap-3 items-center bg-red-600/70"
+          >
             <span className="w-5 h-5">
               <LogOut />
             </span>
-            <span className="hidden md:block">Logout</span>
-          </NavLink>
+            <span className="hidden lg:block">Logout</span>
+          </button>
         </div>
       </div>
     </>

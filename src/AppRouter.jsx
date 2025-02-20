@@ -16,6 +16,18 @@ import ChatLayout from "./layout/ChatLayout";
 import RandomChat from "./pages/RandomChat/RandomChat";
 import ChatHome from "./pages/ChatHome/ChatHome";
 
+import { GoogleOAuthProvider } from "@react-oauth/google";
+const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+
+const GoogleAuthWrapper=()=>{
+  return (
+    <GoogleOAuthProvider clientId={googleClientId}>
+      <Login />
+    </GoogleOAuthProvider>
+  )
+};
+      
 const Router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -35,7 +47,7 @@ const Router = createBrowserRouter(
       </Route>
 
       {/* login route  */}
-      <Route path="login" element={<Login />} />
+      <Route path="login" element={<GoogleAuthWrapper />} />
       <Route path="*" element={<Error />} />
 
     </>
