@@ -1,7 +1,8 @@
 import axios from 'axios';
+const url=import.meta.env.VITE_API_URL;
 
 const loginApi = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: url,
 });
 
 export const googleauth=(code)=>loginApi.get(`/auth/google?code=${code}`);
