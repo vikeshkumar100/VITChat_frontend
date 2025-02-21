@@ -20,17 +20,17 @@ const ProfileSheet = ({ name, email, image }) => {
         </SheetTrigger>
         <SheetContent className="bg-zinc-400 dark:bg-zinc-950">
           <SheetHeader>
-            <SheetTitle className="text-2xl">Profile</SheetTitle>
+            <SheetTitle className="text-lg md:text-2xl">Profile</SheetTitle>
             <SheetDescription className="flex flex-col gap-4 bg-gray-600/60 dark:bg-gray-700/90 p-4 rounded-lg">
               <div>
                 <img src={image} alt="user image" className="rounded-full" />
               </div>
               <div className="text-xl">Name</div>
-              <div className="bg-black text-white py-4 px-2 rounded-md text-lg">
+              <div className="bg-black text-white py-4 px-2 rounded-md md:text-lg">
                 {name}
               </div>
               <div className="text-xl">Email</div>
-              <div className="bg-black text-white py-4 px-2 rounded-md text-lg">
+              <div className="bg-black text-white py-4 px-2 rounded-md md:text-lg">
                 {email}
               </div>
             </SheetDescription>
