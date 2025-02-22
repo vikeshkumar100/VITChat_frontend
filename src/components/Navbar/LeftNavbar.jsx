@@ -11,27 +11,26 @@ import ChatButton from "../Buttons/ChatButton";
 import ProfileSheet from "../ProfileSheet/ProfileSheet";
 
 const LeftNavbar = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    localStorage.getItem("user") !== null
-  );
+  const [user, setUser] = useState(() => {
+    return JSON.parse(localStorage.getItem("user")) || null;
+  });
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    setIsAuthenticated(false);
+    setUser(null);
     navigate("/");
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("user")) {
+    if (!user) {
       navigate("/");
     }
-  }, [isAuthenticated, navigate]);
-  const user = JSON.parse(localStorage.getItem("user"));
+  }, [user, navigate]);
   return (
     <>
-      <div className="fixed flex flex-col gap-2 lg:justify-between w-12 h-screen md:pt-16 lg:w-56 pt-[7vh] bg-gray-800">
+      <div className="flex flex-col gap-2 lg:justify-between w-12 h-screen md:pt-16 lg:w-56 pt-[7vh] bg-gray-800">
         {/* upper  */}
         <div>
           <ul className="flex flex-col gap-3 justify-around w-full items-center p-1">

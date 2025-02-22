@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ModeToggle } from "../mode-toggle";
-import { use } from "react";
 import ProfileSheet from "../ProfileSheet/ProfileSheet";
 import {
   Popover,
@@ -15,19 +14,11 @@ const Navbar = () => {
   const [user, setUser] = useState(() => {
     return JSON.parse(localStorage.getItem("user")) || null;
   });
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    setUser(false);
+    setUser(null);
     navigate("/");
   };
 

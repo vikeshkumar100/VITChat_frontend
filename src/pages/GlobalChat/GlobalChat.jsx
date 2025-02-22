@@ -1,9 +1,11 @@
-import React from 'react'
+import GlobalChatBox from "../../components/Chat/GlobalChatBox";
 
 const GlobalChat = () => {
   return (
-    <div>GlobalChat</div>
-  )
-}
+    <div className="min-h-screen w-full flex flex-col items-center justify-center">
+      <GlobalChatBox />
+    </div>
+  );
+};
 
-export default GlobalChat
+export default GlobalChat;

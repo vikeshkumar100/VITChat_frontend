@@ -17,6 +17,7 @@ import RandomChat from "./pages/RandomChat/RandomChat";
 import ChatHome from "./pages/ChatHome/ChatHome";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { SocketProvider } from "./config/SocketContext";
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 
@@ -41,7 +42,7 @@ const Router = createBrowserRouter(
       {/* protected routes */}
       <Route path="chat" element={<ProtectedRoute><ChatLayout /></ProtectedRoute>}>
         <Route index element={<ChatHome />} />
-        <Route path="global-chat" element={<GlobalChat />} />
+        <Route path="global-chat" element={<SocketProvider><GlobalChat /></SocketProvider>} />
         <Route path="chat-bot" element={<ChatBot />} />
         <Route path="random-chat" element={<RandomChat />} />    
       </Route>
