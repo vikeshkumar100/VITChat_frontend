@@ -7,7 +7,7 @@ const ChatHome = () => {
   return (
     <>
       {/* spline robot  */}
-      <div className="flex justify-center items-center h-screen p-4 bg-zinc-400 dark:bg-zinc-950">
+      <div className="flex w-full justify-center items-center h-screen p-4 bg-zinc-400 dark:bg-zinc-950">
         <Spline scene="https://prod.spline.design/EdkG9NcJg5BcqIQA/scene.splinecode" />
       </div>
 
