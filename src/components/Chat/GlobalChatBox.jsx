@@ -58,11 +58,11 @@ const GlobalChatBox = () => {
   return (
     <div className="p-4 h-full w-full bg-gray-100 dark:bg-black flex flex-col justify-end">
       {/* Chat Box */}
-      <div className="h-[85vh] overflow-y-auto p-2 rounded-md flex flex-col">
+      <div className="h-[85vh] w-full overflow-y-auto p-2 rounded-md flex flex-col">
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`flex items-center mb-2 ${
+            className={`flex w-full items-center mb-2 ${
               msg.id === user.id ? "justify-end" : "justify-start"
             }`}
           >
@@ -77,7 +77,7 @@ const GlobalChatBox = () => {
 
             {/* Message Bubble */}
             <div
-              className={`p-2 max-w-xs rounded-md text-white ${
+              className={`p-2 h-auto break-words max-w-sm rounded-md text-white ${
                 msg.id === user.id
                   ? "bg-blue-500 self-end" // Your messages
                   : "bg-green-500 self-start" // Other users
