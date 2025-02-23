@@ -2,7 +2,7 @@ import GlobalChatBox from "../../components/Chat/GlobalChatBox";
 
 const GlobalChat = () => {
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center">
+    <div className="min-h-screen max-w-full overflow-hidden">
       <GlobalChatBox />
     </div>
   );

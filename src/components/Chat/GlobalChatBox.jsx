@@ -11,23 +11,10 @@ const GlobalChatBox = () => {
   // Get user data from localStorage
   const storedUser = JSON.parse(localStorage.getItem("user")) || {};
   const [user, setUser] = useState({
-    id: storedUser.id || "",
+    id: storedUser.email || "",
     name: storedUser.name || "Guest",
-    profilePic: storedUser.image || "", // Use actual user profile pic
+    profilePic: storedUser.image || "",
   });
-
-  // Update user ID when socket connects
-  useEffect(() => {
-    if (!user.id) {
-      socket.on("connect", () => {
-        setUser((prev) => ({ ...prev, id: socket.id }));
-      });
-    }
-
-    return () => {
-      socket.off("connect");
-    };
-  }, [user.id]);
 
   // Load messages from socket
   useEffect(() => {
@@ -56,11 +43,12 @@ const GlobalChatBox = () => {
         id: user.id,
         text: message,
         name: user.name,
-        profilePic: user.profilePic, // Use user's actual profile pic
+        profilePic: user.profilePic,
+        time: new Date().toLocaleTimeString(),
       };
 
       socket.emit("sendMessage", newMessage);
-      setMessage(""); // Clear input
+      setMessage("");
     }
   };
 
@@ -70,17 +58,19 @@ const GlobalChatBox = () => {
   };
 
   return (
-    <div className="p-4 h-full w-full bg-gray-100 dark:bg-black flex flex-col justify-end">
+    <div className="p-2 h-full bg-gray-100 dark:bg-black flex flex-col justify-end">
       {/* Chat Box */}
       <div className="h-[85vh] w-full overflow-y-auto p-2 rounded-md flex flex-col">
         {messages.map((msg, index) => (
+          
+          // Message container
           <div
             key={index}
             className={`w-full flex mb-2 ${
               msg.id === user.id ? "justify-end" : "justify-start"
             }`}
           >
-            {/* Profile Picture (Other Users) */}
+            {/* Profile Picture (other person )*/}
             {msg.id !== user.id && msg.profilePic && (
               <img
                 src={msg.profilePic}
@@ -89,17 +79,20 @@ const GlobalChatBox = () => {
               />
             )}
 
-            {/* Message Bubble */}
+            {/* text Box */}
             <div
-              className={`p-2 h-auto break-words max-w-[75%] md:max-w-[60%] lg:max-w-[50%] rounded-md text-white ${
+              className={`items-end py-2 h-auto break-words min-w-[20%] max-w-[75%] font-semibold md:max-w-[60%] lg:max-w-[50%] rounded-md ${
                 msg.id === user.id ? "bg-blue-500" : "bg-green-500"
               }`}
             >
-              <p className="font-bold">{msg.name}</p>
-              <p className="whitespace-pre-wrap break-words">{msg.text}</p>
+              <p className="px-2 w-full">
+                {msg.name}
+              </p>
+              <p className="w-full p-1 md:p-2 whitespace-pre-wrap break-words border-y border-zinc-600/60 font-mono">{msg.text}</p>
+              <p className="text-xs p-1">{msg.time}</p>
             </div>
 
-            {/* Profile Picture (Your Messages) */}
+            {/* Profile Picture (self Messages) */}
             {msg.id === user.id && user.profilePic && (
               <img
                 src={user.profilePic}
