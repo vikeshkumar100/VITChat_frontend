@@ -62,7 +62,6 @@ const GlobalChatBox = () => {
       {/* Chat Box */}
       <div className="h-[85vh] w-full overflow-y-auto p-2 rounded-md flex flex-col">
         {messages.map((msg, index) => (
-          
           // Message container
           <div
             key={index}
@@ -85,10 +84,10 @@ const GlobalChatBox = () => {
                 msg.id === user.id ? "bg-blue-500" : "bg-green-500"
               }`}
             >
-              <p className="px-2 w-full">
-                {msg.name}
+              <p className="px-2 w-full">{msg.name}</p>
+              <p className="w-full p-1 md:p-2 whitespace-pre-wrap break-words border-y border-zinc-600/60">
+                {msg.text}
               </p>
-              <p className="w-full p-1 md:p-2 whitespace-pre-wrap break-words border-y border-zinc-600/60 font-mono">{msg.text}</p>
               <p className="text-xs p-1">{msg.time}</p>
             </div>
 
