@@ -1,31 +1,37 @@
 import socket from "../../lib/socket";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const UserCount = () => {
+  const apiurl = import.meta.env.VITE_API_URL;
   const [activeUsers, setActiveUsers] = useState(0);
   const [registeredUsers, setRegisteredUsers] = useState(0);
 
+  const fetchRegisteredUsers = async () => {
+    try {
+      const res = await axios.get(`${apiurl}/users/registered-users`);
+      setRegisteredUsers(res.data.registeredUsers);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
+    fetchRegisteredUsers();
+    socket.emit("requestActiveUsers");
     socket.on("activeUsers", (count) => {
       setActiveUsers(count);
     });
 
-    socket.on("registeredUsers", (count) => {
-      setRegisteredUsers(count);
-    });
-
     return () => {
       socket.off("activeUsers");
-      socket.off("registeredUsers");
     };
   }, []);
 
   return (
-    <>
-      <div className="text-gray-600 text-lg dark:text-white">
-        Active Users: {activeUsers} | Registered Users: {registeredUsers}
-      </div>
-    </>
+    <div className="text-gray-600 text-lg dark:text-white">
+      Active Users: {activeUsers} | Registered Users: {registeredUsers}
+    </div>
   );
 };
 
