@@ -58,7 +58,7 @@ const GlobalChatBox = () => {
   };
 
   return (
-    <div className="p-2 h-full bg-gray-100 dark:bg-black flex flex-col justify-end">
+    <div className="p-2 pt-20 md:pt-24 w-full h-full bg-gray-100 dark:bg-black flex flex-col justify-end">
       {/* Chat Box */}
       <div className="h-[85vh] w-full overflow-y-auto p-2 rounded-md flex flex-col">
         {messages.map((msg, index) => (
