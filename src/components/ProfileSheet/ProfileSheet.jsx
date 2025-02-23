@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Sheet,
   SheetContent,
@@ -12,8 +12,8 @@ const ProfileSheet = ({ name, email, image }) => {
   return (
     <>
       <Sheet>
-        <SheetTrigger>
-          <div className="p-2 text-lg rounded-lg cursor-pointer flex gap-3 items-center bg-blue-600/70">
+        <SheetTrigger className="w-full">
+          <div className="p-2 text-lg rounded-lg cursor-pointer flex justify-center lg:justify-normal gap-3 items-center bg-blue-600/70">
             <UserRoundPen />
             <span className="hidden lg:flex">Profile</span>
           </div>

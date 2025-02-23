@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ModeToggle } from "../mode-toggle";
 import ProfileSheet from "../ProfileSheet/ProfileSheet";
@@ -7,20 +7,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { LogOut } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import ProfileButton from "../Buttons/ProfileButton";
+import LogoutButton from "../Buttons/LogoutButton";
 
 const Navbar = () => {
   const [user, setUser] = useState(() => {
     return JSON.parse(localStorage.getItem("user")) || null;
   });
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-    navigate("/");
-  };
 
   return (
     <>
@@ -64,21 +57,9 @@ const Navbar = () => {
               </PopoverTrigger>
               <PopoverContent>
                 <div className="flex flex-col gap-2">
-                  <ProfileSheet
-                    name={user.name}
-                    email={user.email}
-                    image={user.image}
-                  />
+                  <ProfileButton />
                   {/* logout button  */}
-                  <button
-                    onClick={handleLogout}
-                    className="w-full p-2 text-lg rounded-lg cursor-pointer flex justify-left lg:justify-normal gap-3 items-center bg-red-600/70"
-                  >
-                    <span className="w-5 h-5">
-                      <LogOut />
-                    </span>
-                    <span className="hidden lg:block">Logout</span>
-                  </button>
+                  <LogoutButton />
                 </div>
               </PopoverContent>
             </Popover>

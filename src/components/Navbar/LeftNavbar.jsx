@@ -1,36 +1,18 @@
 import {
   BotMessageSquare,
   House,
-  LogOut,
   MessageSquareDot,
   Shuffle,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import ChatButton from "../Buttons/ChatButton";
-import ProfileSheet from "../ProfileSheet/ProfileSheet";
+import LogoutButton from "../Buttons/LogoutButton";
+import ProfileButton from "../Buttons/ProfileButton";
 
 const LeftNavbar = () => {
-  const [user, setUser] = useState(() => {
-    return JSON.parse(localStorage.getItem("user")) || null;
-  });
-
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-    navigate("/");
-  };
-
-  useEffect(() => {
-    if (!user) {
-      navigate("/");
-    }
-  }, [user, navigate]);
   return (
     <>
-      <div className="flex flex-col gap-2 lg:justify-between w-12 h-screen md:pt-16 lg:w-56 pt-[7vh] bg-gray-800">
+      <div className="flex flex-col gap-2 lg:justify-between w-12 min-h-screen md:pt-16 lg:w-56 pt-[7vh] bg-gray-800">
         {/* upper  */}
         <div>
           <ul className="flex flex-col gap-3 justify-around w-full items-center p-1">
@@ -73,26 +55,10 @@ const LeftNavbar = () => {
         {/* lower  */}
         <div className="pb-2 flex flex-col lg:flex-row gap-2 py-3 px-1 border-t-2 border-gray-600 ">
           {/* profile button */}
-          <div>
-            <span>
-              <ProfileSheet
-                name={user.name}
-                email={user.email}
-                image={user.image}
-              />
-            </span>
-          </div>
+          <ProfileButton />
 
           {/* logout button  */}
-          <button
-            onClick={handleLogout}
-            className="w-full p-2 text-lg rounded-lg cursor-pointer flex justify-center lg:justify-normal gap-3 items-center bg-red-600/70"
-          >
-            <span className="w-5 h-5">
-              <LogOut />
-            </span>
-            <span className="hidden lg:block">Logout</span>
-          </button>
+          <LogoutButton />
         </div>
       </div>
     </>
