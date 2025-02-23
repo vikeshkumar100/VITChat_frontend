@@ -6,16 +6,30 @@ const GlobalChatBox = () => {
   const [messages, setMessages] = useState(
     JSON.parse(sessionStorage.getItem("chatMessages")) || []
   );
-  const messagesEndRef = useRef(null); // Ref for auto-scrolling
+  const messagesEndRef = useRef(null);
 
   // Get user data from localStorage
-  const user = JSON.parse(localStorage.getItem("user")) || {
-    id: socket.id,
-    name: "Guest",
-    profilePic: "https://i.pravatar.cc/40",
-  };
+  const storedUser = JSON.parse(localStorage.getItem("user")) || {};
+  const [user, setUser] = useState({
+    id: storedUser.id || "",
+    name: storedUser.name || "Guest",
+    profilePic: storedUser.image || "", // Use actual user profile pic
+  });
 
-  // Load messages from socket and update session storage
+  // Update user ID when socket connects
+  useEffect(() => {
+    if (!user.id) {
+      socket.on("connect", () => {
+        setUser((prev) => ({ ...prev, id: socket.id }));
+      });
+    }
+
+    return () => {
+      socket.off("connect");
+    };
+  }, [user.id]);
+
+  // Load messages from socket
   useEffect(() => {
     socket.on("receiveMessage", (newMessage) => {
       setMessages((prev) => {
@@ -42,7 +56,7 @@ const GlobalChatBox = () => {
         id: user.id,
         text: message,
         name: user.name,
-        profilePic: user.image,
+        profilePic: user.profilePic, // Use user's actual profile pic
       };
 
       socket.emit("sendMessage", newMessage);
@@ -62,12 +76,12 @@ const GlobalChatBox = () => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`flex w-full items-center mb-2 ${
+            className={`w-full flex mb-2 ${
               msg.id === user.id ? "justify-end" : "justify-start"
             }`}
           >
             {/* Profile Picture (Other Users) */}
-            {msg.id !== user.id && (
+            {msg.id !== user.id && msg.profilePic && (
               <img
                 src={msg.profilePic}
                 alt={msg.name}
@@ -77,20 +91,18 @@ const GlobalChatBox = () => {
 
             {/* Message Bubble */}
             <div
-              className={`p-2 h-auto break-words max-w-sm rounded-md text-white ${
-                msg.id === user.id
-                  ? "bg-blue-500 self-end" // Your messages
-                  : "bg-green-500 self-start" // Other users
+              className={`p-2 h-auto break-words max-w-[75%] md:max-w-[60%] lg:max-w-[50%] rounded-md text-white ${
+                msg.id === user.id ? "bg-blue-500" : "bg-green-500"
               }`}
             >
               <p className="font-bold">{msg.name}</p>
-              <p>{msg.text}</p>
+              <p className="whitespace-pre-wrap break-words">{msg.text}</p>
             </div>
 
             {/* Profile Picture (Your Messages) */}
-            {msg.id === user.id && (
+            {msg.id === user.id && user.profilePic && (
               <img
-                src={msg.profilePic}
+                src={user.profilePic}
                 alt="Me"
                 className="w-8 h-8 rounded-full ml-2"
               />
