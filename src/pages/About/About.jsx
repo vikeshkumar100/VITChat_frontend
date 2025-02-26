@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import UnderDevelopment from "../Error/UnderDevelopment";
 
 const About = () => {
   return (
-    <div className='min-h-screen'>About</div>
-  )
-}
+    <>
+      <div>About</div>
+      <UnderDevelopment />
+    </>
+  );
+};
 
-export default About
+export default About;

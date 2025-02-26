@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import UnderDevelopment from "../Error/UnderDevelopment";
 
 const Home = () => {
   return (
-    <div className='h-screen'>Home</div>
-  )
-}
+    <>
+      <div>Home</div>
+      <UnderDevelopment />
+    </>
+  );
+};
 
 export default Home;
