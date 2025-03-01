@@ -1,68 +1,94 @@
 import React, { useRef, useState, useEffect } from "react";
+import axios from "axios";
 
 const Chatbot = () => {
-  const [question, setquestion] = useState("");
-  const [chat, setchat] = useState([]);
+  const [question, setQuestion] = useState("");
+  const [chat, setChat] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const chatEndRef = useRef(null);
 
   useEffect(() => {
-    const savedChat = sessionStorage.getItem("chatHistory");
+    const savedChat = sessionStorage.getItem("chatBotHistory");
     if (savedChat) {
-      setchat(JSON.parse(savedChat));
+      setChat(JSON.parse(savedChat));
     }
   }, []);
 
   useEffect(() => {
-    sessionStorage.setItem("chatHistory", JSON.stringify(chat));
+    sessionStorage.setItem("chatBotHistory", JSON.stringify(chat));
   }, [chat]);
 
-  // Auto-scroll to the latest message
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
 
   // Send message
-  const sendquestion = async () => {
+  const sendQuestion = async () => {
     if (question.trim() === "") return;
 
     setIsLoading(true);
     const userMessage = question;
-    setquestion("");
+    setQuestion("");
 
-    setchat((prevChat) => {
+    setChat((prevChat) => {
       const updatedChat = [...prevChat, { text: userMessage, isBot: false }];
-      sessionStorage.setItem("chatHistory", JSON.stringify(updatedChat));
+      sessionStorage.setItem("chatBotHistory", JSON.stringify(updatedChat));
       return updatedChat;
     });
 
-    const ans = await getanswer();
+    const ans = await getAnswer(userMessage);
 
-    setchat((prevChat) => {
+    setChat((prevChat) => {
       const updatedChat = [...prevChat, { text: ans, isBot: true }];
-      sessionStorage.setItem("chatHistory", JSON.stringify(updatedChat));
+      sessionStorage.setItem("chatBotHistory", JSON.stringify(updatedChat));
       return updatedChat;
     });
 
     setIsLoading(false);
   };
 
-  const getanswer = async () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve("This is a bot response.");
-      }, 2000);
-    });
+  // answer from gemini API
+
+  const getAnswer = async (userMessage) => {
+    try {
+      const prompt = `You are a chatbot that provides **accurate, official, and up-to-date information about VIT (Vellore Institute of Technology)**.
+      -Developed by Vikesh.
+      - Your responses should be **short, factual, and direct**.
+      - Use only **official VIT sources** (like vit.ac.in).
+      - If you don't know, **do not guess**—just say "I don't have that information."
+      
+      **User question:** "${userMessage}"`;
+
+      const response = await axios.post(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${
+          import.meta.env.VITE_AI_API_KEY
+        }`,
+        {
+          contents: [{ parts: [{ text: prompt }] }],
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      return (
+        response.data.candidates?.[0]?.content?.parts?.[0]?.text ||
+        "Sorry, I don't have that information."
+      );
+    } catch (error) {
+      console.error("Error fetching from Gemini API:", error);
+      return "Error fetching response.";
+    }
   };
 
   // Send message when pressing "Enter"
   const handleKeyPress = (e) => {
-    if (e.key === "Enter" && !isLoading) sendquestion();
+    if (e.key === "Enter" && !isLoading) sendQuestion();
   };
 
   return (
-    <div className="pt-12 pb-1 md:pt-16 w-full max-h-screen bg-gray-200 dark:bg-black flex flex-col justify-end">
+    <div className="pt-12 pb-1 md:pt-16 w-full max-h-screen text-white bg-gray-200 dark:bg-black flex flex-col justify-end">
       {/* Chat box */}
       <div className="w-full overflow-y-auto p-2 rounded-md flex flex-col">
         {chat.map((msg, index) => (
@@ -74,7 +100,7 @@ const Chatbot = () => {
           >
             <div
               className={`items-end p-3 h-auto break-words min-w-[20%] max-w-[75%] font-semibold md:max-w-[60%] lg:max-w-[50%] rounded-md ${
-                msg.isBot ? "bg-gray-600 " : "bg-blue-600"
+                msg.isBot ? "bg-gray-600" : "bg-blue-600"
               }`}
             >
               {msg.text}
@@ -89,14 +115,14 @@ const Chatbot = () => {
         <input
           type="text"
           value={question}
-          onChange={(e) => setquestion(e.target.value)}
+          onChange={(e) => setQuestion(e.target.value)}
           onKeyDown={handleKeyPress}
-          placeholder="Type a message..."
+          placeholder="Type your question..."
           className="flex-1 p-2 border rounded-md dark:bg-gray-600 dark:text-white"
           disabled={isLoading}
         />
         <button
-          onClick={sendquestion}
+          onClick={sendQuestion}
           className={`px-4 py-2 rounded-md ${
             isLoading
               ? "bg-gray-400 cursor-not-allowed"
