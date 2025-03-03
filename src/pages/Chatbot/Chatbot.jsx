@@ -53,7 +53,7 @@ const Chatbot = () => {
   const getAnswer = async (userMessage) => {
     try {
       const prompt = `You are a chatbot that provides **accurate, official, and up-to-date information about VIT (Vellore Institute of Technology)**.
-      -Developed by Vikesh.
+      -Developed by Vikesh and darun.
       - Your responses should be **short, factual, and direct**.
       - Use only **official VIT sources** (like vit.ac.in).
       - If you don't know, **do not guess**—just say "I don't have that information."

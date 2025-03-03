@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const ChatButton = (props) => {
+const PrimaryButton = (props) => {
     const {path, Icon, text}=props;
   return (
     <NavLink
@@ -17,4 +17,4 @@ const ChatButton = (props) => {
   );
 };
 
-export default ChatButton;
+export default PrimaryButton;

@@ -3,9 +3,10 @@ import {
   House,
   MessageSquareDot,
   Shuffle,
+  Star,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import ChatButton from "../Buttons/ChatButton";
+import PrimaryButton from "../Buttons/PrimaryButton";
 import LogoutButton from "../Buttons/LogoutButton";
 import ProfileButton from "../Buttons/ProfileButton";
 
@@ -17,7 +18,7 @@ const LeftNavbar = () => {
         <div>
           <ul className="flex flex-col gap-3 justify-around w-full items-center p-1">
             <li className="w-full flex">
-              <ChatButton path="/" Icon={House} text="Home" />
+              <PrimaryButton path="/" Icon={House} text="Home" />
             </li>
 
             <li className="flex flex-row w-full lg:p-3 text-center text-lg text-gray-400 items-center gap-2">
@@ -28,26 +29,33 @@ const LeftNavbar = () => {
               <div className="hidden lg:block border-2 border-gray-600 rounded-xl h-0 w-full"></div>
             </li>
 
-            <li className="w-full flex">
-              <ChatButton
+            <li className="w-full">
+              <PrimaryButton
                 path="/chat/global-chat"
                 Icon={MessageSquareDot}
                 text="Global chat"
               />
             </li>
-            <li className="w-full flex">
-              <ChatButton
+            <li className="w-full">
+              <PrimaryButton
                 path="/chat/random-chat"
                 Icon={Shuffle}
                 text="Random chat"
               />
             </li>
-            <li className="w-full flex">
-              <ChatButton
+            <li className="w-full">
+              <PrimaryButton
                 path="/chat/chat-bot"
                 Icon={BotMessageSquare}
                 text="ChatBot"
               />
+            </li>
+
+            <li className="w-full border-t-4 border-gray-600/60 pt-2">
+              <PrimaryButton 
+              path="/chat/review" 
+              Icon={Star} 
+              text="Review us" />
             </li>
           </ul>
         </div>
