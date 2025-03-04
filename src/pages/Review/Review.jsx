@@ -32,9 +32,9 @@ const Review = () => {
     <div className="w-full flex flex-col justify-center items-center gap-4 p-8 text-center dark:text-gray-400">
 
     {/* description  */}
-      <div>Click on superb if you are happy with our service</div>
+      <div>*Click on superb if you are happy with our service</div>
       <div>
-        Click on worst if you are not smart enough to understand our service
+        *Click on worst if you are not smart enough to understand our service
       </div>
 
     {/* button  */}
