@@ -112,7 +112,7 @@ const GlobalChatBox = () => {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyPress} // Handle Enter key
           placeholder="Type a message..."
-          className="flex-1 p-2 border rounded-md dark:bg-gray-600 dark:text-white"
+          className="flex-1 p-2 border rounded-md bg-gray-600 text-white"
         />
         <button
           onClick={sendMessage}

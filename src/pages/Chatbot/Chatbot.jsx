@@ -118,7 +118,7 @@ const Chatbot = () => {
           onChange={(e) => setQuestion(e.target.value)}
           onKeyDown={handleKeyPress}
           placeholder="Type your question..."
-          className="flex-1 p-2 border rounded-md dark:bg-gray-600 dark:text-white"
+          className="flex-1 p-2 border rounded-md bg-gray-600 text-white"
           disabled={isLoading}
         />
         <button

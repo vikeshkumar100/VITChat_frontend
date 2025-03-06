@@ -29,7 +29,7 @@ const UserCount = () => {
   }, []);
 
   return (
-    <div className="text-gray-600 text-lg dark:text-white">
+    <div className="text-black text-lg dark:text-white">
       Active Users: {activeUsers} | Registered Users: {registeredUsers}
     </div>
   );

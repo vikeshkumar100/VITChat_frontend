@@ -21,7 +21,7 @@ const LogoutButton = () => {
   };
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="w-full p-2 text-lg rounded-lg cursor-pointer flex justify-center lg:justify-normal gap-3 items-center bg-red-600/70">
+      <AlertDialogTrigger className="w-full p-2 text-lg rounded-lg cursor-pointer flex justify-center lg:justify-normal gap-3 items-center bg-red-600/70 text-white">
         <span className="w-5 h-5">
           <LogOut />
         </span>

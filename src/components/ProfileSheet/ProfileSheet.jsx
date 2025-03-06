@@ -13,7 +13,7 @@ const ProfileSheet = ({ name, email, image }) => {
     <>
       <Sheet>
         <SheetTrigger className="w-full">
-          <div className="p-2 text-lg rounded-lg cursor-pointer flex justify-center lg:justify-normal gap-3 items-center bg-blue-600/70">
+          <div className="p-2 text-lg rounded-lg cursor-pointer flex justify-center lg:justify-normal gap-3 items-center text-white bg-blue-600/70">
             <UserRoundPen />
             <span className="hidden lg:flex">Profile</span>
           </div>
