@@ -5,7 +5,7 @@ import router from './AppRouter';
 import { ThemeProvider } from "@/components/theme-provider"
 createRoot(document.getElementById('root')).render(
   <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <RouterProvider router={router} />
+      <RouterProvider router={router}/>
     </ThemeProvider>
   
 );

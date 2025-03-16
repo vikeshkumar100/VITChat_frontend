@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ModeToggle } from "../mode-toggle";
-import ProfileSheet from "../ProfileSheet/ProfileSheet";
 import {
   Popover,
   PopoverContent,
@@ -17,7 +16,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="w-full text-lg fixed flex flex-row justify-between items-center px-4 py-2 md:px-12 md:pt-6 md:pb-0">
+      <div className="w-full text-lg fixed flex flex-row justify-between items-center px-4 py-2 md:px-12 md:pt-6 md:pb-0 z-10 backdrop-blur-md">
         {/* left  */}
         <Link to="/" className="flex text-2xl items-center gap-2">
           <img src="/icons/logo.png" alt="vikesh" className="w-8" />
@@ -25,19 +24,19 @@ const Navbar = () => {
         </Link>
 
         {/* middle  */}
-        <div className="hidden md:block min-w-[35vw] bg-gray-500/50 py-2 px-4 rounded-3xl">
+        <div className="hidden md:block min-w-[35vw] bg-gray-600/40 py-2 px-4 rounded-3xl">
           <ul className="w-full flex flex-row justify-around items-center">
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/" className={({isActive})=>`${isActive ? "text-blue-400 font-bold" : "" }`}>Home</NavLink>
             </li>
             <li>
-              <NavLink to="/about">About</NavLink>
+              <NavLink to="/about" className={({isActive})=>`${isActive ? "text-blue-400 font-bold" : "" }`}>About</NavLink>
             </li>
             <li>
-              <NavLink to="/contact">Contact</NavLink>
+              <NavLink to="/contact" className={({isActive})=>`${isActive ? "text-blue-400 font-bold" : "" }`}>Contact</NavLink>
             </li>
             <li>
-              <NavLink to="/chat">Chat</NavLink>
+              <NavLink to="/chat" className={({isActive})=>`${isActive ? "text-blue-400 font-bold" : "" }`}>Chat</NavLink>
             </li>
           </ul>
         </div>

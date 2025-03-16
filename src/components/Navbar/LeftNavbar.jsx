@@ -13,7 +13,7 @@ import ProfileButton from "../Buttons/ProfileButton";
 const LeftNavbar = () => {
   return (
     <>
-      <div className="flex flex-col gap-2 lg:justify-between w-12 min-h-screen md:pt-16 lg:w-56 pt-[7vh] bg-gray-800">
+      <div className="flex flex-col gap-2 lg:justify-between w-12 min-h-screen md:pt-16 lg:w-56 pt-[7vh] bg-stone-950 dark:bg-gray-800/50">
         {/* upper  */}
         <div>
           <ul className="flex flex-col gap-3 justify-around w-full items-center p-1">
@@ -21,7 +21,7 @@ const LeftNavbar = () => {
               <PrimaryButton path="/" Icon={House} text="Home" />
             </li>
 
-            <li className="flex flex-row w-full lg:p-3 text-center text-lg text-gray-400 items-center gap-2">
+            <li className="flex flex-row w-full lg:p-3 text-center text-lg items-center gap-2">
               <div className="hidden lg:block border-2 border-gray-600 rounded-xl h-0 w-full"></div>
               <NavLink to="/chat" className="text-blue-400 font-semibold">
                 Chat

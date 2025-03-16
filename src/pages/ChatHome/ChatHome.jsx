@@ -7,12 +7,12 @@ const ChatHome = () => {
   return (
     <>
       {/* spline robot  */}
-      <div className="flex w-full justify-center items-center h-screen p-4 bg-zinc-400 dark:bg-zinc-950">
+      <div className="flex w-full justify-center items-center h-screen p-4">
         <Spline scene="https://prod.spline.design/EdkG9NcJg5BcqIQA/scene.splinecode" />
       </div>
 
       {/* box */}
-      <div className="fixed w-[30vw] top-[25vh] right-[2vw] text-lg md:text-2xl bg-gray-600/60 dark:bg-gray-600/20 backdrop-blur-lg p-5 rounded-xl shadow-md hover:shadow-current text-blue-200 font-sans">
+      <div className="fixed w-[30vw] top-[25vh] right-[2vw] text-lg md:text-2xl bg-gray-600/80 dark:bg-gray-600/20 backdrop-blur-lg p-5 rounded-xl shadow-md hover:shadow-current text-blue-200 font-sans">
         <Link
           to="/chat/global-chat"
           className="text-blue-400 hover:text-blue-500"

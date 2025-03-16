@@ -1,6 +1,7 @@
 import socket from "../../lib/socket";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { NumberTicker } from "../magicui/number-ticker";
 
 const UserCount = () => {
   const apiurl = import.meta.env.VITE_API_URL;
@@ -30,7 +31,16 @@ const UserCount = () => {
 
   return (
     <div className="text-black text-lg dark:text-white">
-      Active Users: {activeUsers} | Registered Users: {registeredUsers}
+      Active Users : {""}
+      <NumberTicker
+        value={activeUsers}
+        className="whitespace-pre-wrap font-medium tracking-tighter text-black dark:text-white"
+      />{" "}
+      | Registered Users : {""}
+      <NumberTicker
+        value={registeredUsers}
+        className="whitespace-pre-wrap font-medium tracking-tighter text-black dark:text-white"
+      />
     </div>
   );
 };
