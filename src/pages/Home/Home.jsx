@@ -9,7 +9,7 @@ import FeaturesSection from "@/components/Sections/FeaturesSection";
 
 const Home = () => {
   return (
-    <div className="relative min-h-screen max-w-full flex flex-col items-center justify-center">
+    <div className="relative min-h-screen max-w-full flex flex-col items-center justify-center border border-red-300">
       {/* background  */}
       <div className="absolute h-screen inset-0 -z-10">
         <AnimatedGridPatternDemo />
@@ -42,7 +42,7 @@ const Home = () => {
       </div>
 
       {/* marquee  */}
-      <div className="flex w-full flex-col items-center justify-center overflow-hidden">
+      <div className="flex max-w-full flex-col items-center justify-center overflow-hidden">
         <VelocityScroll defaultVelocity={1}>
           🌍Global Chat • 💬Random Chat • 🤖AI Chatbot • 🔒Secure VIT Email
           Login • ⚡Real-Time Messaging
@@ -50,7 +50,7 @@ const Home = () => {
       </div>
 
       {/* features */}
-      <FeaturesSection />
+      <FeaturesSection/>
 
       {/* Why section */}
       <WhySection />

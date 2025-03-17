@@ -6,7 +6,7 @@ const FeaturesSection = () => {
         <h2 className="text-3xl md:text-6xl font-bold bg-blue-500 p-3 w-full text-center">
           Features You’ll Love
         </h2>
-        <div className="w-2/3 flex flex-col md:flex-row items-center justify-center gap-10">
+        <div className="flex flex-row flex-wrap items-center justify-center gap-10">
           <FeaturesCard
             route="/chat/global-chat"
             icon="🌍"
