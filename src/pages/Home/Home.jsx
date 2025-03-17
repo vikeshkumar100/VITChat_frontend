@@ -4,12 +4,12 @@ import { RainbowButton } from "../../components/magicui/rainbow-button";
 import { TypingAnimation } from "../../components/magicui/typing-animation";
 import { VelocityScroll } from "../../components/magicui/scroll-based-velocity";
 import { Link } from "react-router-dom";
-import WhySection from "@/components/Sections/WhySection";
 import FeaturesSection from "@/components/Sections/FeaturesSection";
+import AccordianFAQ from "@/components/Sections/AccordianFAQ";
 
 const Home = () => {
   return (
-    <div className="relative min-h-screen max-w-full flex flex-col items-center justify-center border border-red-300">
+    <div className="relative min-h-screen max-w-full flex flex-col items-center justify-center">
       {/* background  */}
       <div className="absolute h-screen inset-0 -z-10">
         <AnimatedGridPatternDemo />
@@ -50,14 +50,14 @@ const Home = () => {
       </div>
 
       {/* features */}
-      <FeaturesSection/>
+      <FeaturesSection />
 
-      {/* Why section */}
-      <WhySection />
+      {/* FAQ section  */}
+      <AccordianFAQ />
 
       {/* CTA */}
       <Link to="/chat">
-          <RainbowButton className="md:text-2xl">Join Chat Now</RainbowButton>{" "}
+        <RainbowButton className="md:text-2xl">Join Chat Now</RainbowButton>{" "}
       </Link>
     </div>
   );

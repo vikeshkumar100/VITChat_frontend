@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ProfileSheet from "../ProfileSheet/ProfileSheet";
+import ProfileSheet from "../Sections/ProfileSheet";
 
 const ProfileButton = () => {
   const [user, setUser] = useState(() => {

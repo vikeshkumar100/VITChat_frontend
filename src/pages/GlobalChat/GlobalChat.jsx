@@ -1,5 +1,5 @@
-import UserCount from "../../components/UserData/UserCount";
-import GlobalChatBox from "../../components/Chat/GlobalChatBox";
+import UserCount from "../../components/Sections/UserCount";
+import GlobalChatBox from "../../components/Sections/GlobalChatBox";
 
 const GlobalChat = () => {
   return (
