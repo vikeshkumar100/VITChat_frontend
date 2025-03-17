@@ -10,7 +10,7 @@ import facebook from "../../assets/facebook.png";
 const Footer = () => {
   return (
     <footer className="footer-box" id="contact">
-      <span className="text-xl">VITChat isn't just a chat platform – it's a community for VITians, built
+      <span className="text-xl p-4">VITChat isn't just a chat platform – it's a community for VITians, built
       by VITians!💙</span>
       <div className="footer-icon">
         <a href="https://www.instagram.com/vikesh_kapoor_vk/" target="_blank">

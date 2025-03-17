@@ -54,6 +54,11 @@ const Home = () => {
 
       {/* Why section */}
       <WhySection />
+
+      {/* CTA */}
+      <Link to="/chat">
+          <RainbowButton className="md:text-2xl">Join Chat Now</RainbowButton>{" "}
+      </Link>
     </div>
   );
 };
