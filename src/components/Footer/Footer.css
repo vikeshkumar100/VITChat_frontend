@@ -6,7 +6,6 @@
     justify-content: space-evenly;
     align-items: center;
     flex-flow: column nowrap;
-    border-top: 1px solid;
 }
 
 .footer-content {
