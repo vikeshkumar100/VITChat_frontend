@@ -24,7 +24,7 @@ import sadcat from "../../assets/images/sadcat.jpeg";
 import sadcat2 from "../../assets/images/sadcat2.jpeg";
 
 const superb = [happycat, happycat2, happycat3, happycat4, happykid, happyman];
-const worst = [chalaja, angryguy, cryingdog, cryingdog2, sadcat, sadcat2];
+const worst = [angryguy, cryingdog, cryingdog2, sadcat, sadcat2];
 
 const Review = () => {
   const [random, setrandom] = useState(0);

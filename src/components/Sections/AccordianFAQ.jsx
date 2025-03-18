@@ -72,6 +72,8 @@ const AccordianFAQ = () => {
           );
         })}
       </div>
+
+      {/* gradient bg  */}
       <div className="absolute z-[-100] top-0 left-0 md:w-72 w-0 md:h-72 h-0 bg-blue-500 rounded-full opacity-40 blur-[120px] dark:opacity-20"></div>
       <div className="absolute z-[-100] bottom-0 right-0 md:w-72 w-0 md:h-72 h-0 bg-blue-500 rounded-full opacity-40 blur-[120px] dark:opacity-20"></div>
     </div>

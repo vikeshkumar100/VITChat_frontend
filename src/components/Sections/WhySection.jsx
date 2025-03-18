@@ -2,7 +2,7 @@ import React from "react";
 
 const WhySection = () => {
   return (
-    <div className="h-auto w-full flex flex-col items-center pt-40 pb-20">
+    <div className="h-auto w-full flex flex-col items-center pt-36 pb-20">
       <h2 className="text-3xl md:text-6xl font-bold p-3 w-full text-center border-y border-blue-500">
         Why VITChat?
       </h2>
