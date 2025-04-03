@@ -76,7 +76,7 @@ const Contact = () => {
                 name="from_name"
                 required
                 className="w-full px-4 py-3 bg-white dark:bg-gray-700/50 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent text-gray-800 dark:text-white placeholder-gray-400"
-                placeholder="John Doe"
+                placeholder="Your name"
               />
             </div>
 
@@ -90,7 +90,7 @@ const Contact = () => {
                 name="from_email"
                 required
                 className="w-full px-4 py-3 bg-white dark:bg-gray-700/50 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent text-gray-800 dark:text-white placeholder-gray-400"
-                placeholder="john@example.com"
+                placeholder="user@example.com"
               />
             </div>
           </div>
