@@ -82,9 +82,9 @@ const GlobalChat = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full pt-12">
+    <div className="flex flex-col h-screen w-full pt-14">
       {/* Chat Header */}
-      <div className="p-4 bg-white dark:bg-gray-800 border-b dark:border-gray-700 shadow-sm">
+      <div className="px-4 py-2 bg-white dark:bg-gray-800 border-b dark:border-gray-700 shadow-sm">
         <div className="flex items-center justify-between w-full px-4 max-w-7xl mx-auto">
           <div className="flex items-center gap-3">
             <MessageCircle className="w-7 h-7 text-blue-500" />
