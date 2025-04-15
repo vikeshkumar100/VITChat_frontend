@@ -15,17 +15,17 @@ import {
 
 const LogoutButton = () => {
   const navigate = useNavigate();
+  
   const handleLogout = () => {
     localStorage.removeItem("user");
     navigate("/login");
   };
+  
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="w-full p-2 text-lg rounded-lg cursor-pointer flex justify-center lg:justify-normal gap-3 items-center bg-red-600/70 text-white">
-        <span className="w-5 h-5">
-          <LogOut />
-        </span>
-        <span className="hidden lg:block">Logout</span>
+      <AlertDialogTrigger className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md bg-red-600/70 text-white">
+        <LogOut className="h-4 w-4" />
+        <span>Logout</span>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -33,9 +33,7 @@ const LogoutButton = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>
-            <button onClick={handleLogout}>Continue</button>
-          </AlertDialogAction>
+          <AlertDialogAction onClick={handleLogout}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
