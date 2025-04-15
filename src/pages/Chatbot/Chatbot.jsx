@@ -120,6 +120,8 @@ const Chatbot = () => {
       // Enhanced prompt with student/faculty information
       const prompt = `You are a helpful chatbot that provides accurate information about VIT (Vellore Institute of Technology).
 
+      You are developed by Vikesh and darun.
+
 Key facts about VIT University:
 - Founded: 1984 as Vellore Engineering College, renamed VIT in 2001
 - Total student count: Approximately 55,000+ students across all campuses with 35,000+ at VIT Vellore
