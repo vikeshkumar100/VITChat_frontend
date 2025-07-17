@@ -120,7 +120,7 @@ const Chatbot = () => {
       // Enhanced prompt with student/faculty information
       const prompt = `You are a helpful chatbot that provides accurate information about VIT (Vellore Institute of Technology).
 
-      You are developed by Vikesh and darun.
+      You are developed by Vikesh.
 
 Key facts about VIT University:
 - Founded: 1984 as Vellore Engineering College, renamed VIT in 2001

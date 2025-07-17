@@ -9,7 +9,7 @@ const ChatHome = () => {
   return (
     <div className="relative w-full">
       {/* Immediate Chat Box - Always visible */}
-      <div className="fixed w-[30vw] top-[25vh] right-[2vw] text-lg md:text-2xl bg-gray-600/80 dark:bg-gray-600/20 backdrop-blur-lg p-5 rounded-xl shadow-md hover:shadow-current text-blue-200 font-sans z-[9999]">
+      <div className="fixed w-[30vw] top-[25vh] right-[2vw] text-lg md:text-2xl bg-gray-600/80 dark:bg-gray-600/20 backdrop-blur-lg p-5 rounded-xl shadow-md hover:shadow-current text-blue-200 font-sans z-[9]">
         <Link
           to="/chat/global-chat"
           className="text-blue-400 hover:text-blue-500 flex items-center gap-2"

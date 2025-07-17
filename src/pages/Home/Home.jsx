@@ -6,10 +6,21 @@ import { VelocityScroll } from "../../components/magicui/scroll-based-velocity";
 import { Link } from "react-router-dom";
 import FeaturesSection from "@/components/Sections/FeaturesSection";
 import AccordianFAQ from "@/components/Sections/AccordianFAQ";
+import { toast, ToastContainer } from "react-toastify";
 
 const Home = () => {
+  toast.info("For testing purposes, you can use any email to login. However, for production, only VIT emails will be allowed.");
   return (
     <div className="relative min-h-screen max-w-full flex flex-col items-center justify-center">
+      <ToastContainer
+        position="bottom-right"
+        autoClose={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+      />
       {/* background  */}
       <div className="absolute h-screen inset-0 -z-10">
         <AnimatedGridPatternDemo />

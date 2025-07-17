@@ -15,9 +15,9 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const isValidVitEmail = (email) => {
-    return email.endsWith('@vitstudent.ac.in');
-  };
+  // const isValidVitEmail = (email) => {
+  //   return email.endsWith('@vitstudent.ac.in');
+  // };
 
   const responseGoogle = async (res) => {
     try {
@@ -26,11 +26,11 @@ const Login = () => {
         const { name, email, image } = result.data.user;
         const token = result.data.token;
 
-        if (!isValidVitEmail(email)) {
-          setError("Please use your VIT student email (@vitstudent.ac.in)");
-          setIsProcessing(false);
-          return;
-        }
+        // if (!isValidVitEmail(email)) {
+        //   setError("Please use your VIT student email (@vitstudent.ac.in)");
+        //   setIsProcessing(false);
+        //   return;
+        // }
 
         const user = { name, email, image, token };
         localStorage.setItem("user", JSON.stringify(user));
@@ -64,6 +64,8 @@ const Login = () => {
     return <Navigate to="/chat" />;
   }
 
+  toast.info("For testing purposes, you can use any email to login. However, for production, only VIT emails will be allowed.");
+
   return (
     <>
       <Header />
@@ -73,6 +75,15 @@ const Login = () => {
         hideProgressBar
         newestOnTop
       />
+      <ToastContainer
+              position="bottom-right"
+              autoClose={false}
+              newestOnTop={false}
+              closeOnClick={false}
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+            />
 
       {/* Spline background */}
       <div className="h-screen w-full">
@@ -80,7 +91,7 @@ const Login = () => {
       </div>
 
       {/* Login card */}
-      <div className="w-[80vw] md:w-[50vw] flex flex-col gap-8 text-center fixed top-[40vh] left-[50vw] bg-slate-800 px-8 py-4 md:py-8 md:px-16 rounded-xl transform -translate-x-1/2 -translate-y-1/2">
+      <div className="w-[80vw] md:w-[50vw] flex flex-col gap-8 text-center fixed top-[40vh] left-[50vw] bg-slate-800 px-8 py-4 md:py-6 md:px-16 rounded-xl transform -translate-x-1/2 -translate-y-1/2">
         <h2 className="text-2xl md:text-5xl text-white">Welcome to VITChat</h2>
         <div className="text-lg text-gray-400">
           Exclusive to VIT students - Use your institute email
