@@ -57,14 +57,13 @@ const Login = () => {
 
   const handleLoginClick = () => {
     setIsProcessing(true);
+    toast.info("For testing purposes, you can use any email to login. However, for production, only VIT emails will be allowed.");
     handleLogin();
   };
 
   if (isAuthenticated) {
     return <Navigate to="/chat" />;
   }
-
-  toast.info("For testing purposes, you can use any email to login. However, for production, only VIT emails will be allowed.");
 
   return (
     <>
