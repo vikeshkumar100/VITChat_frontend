@@ -72,8 +72,10 @@ const Chatbot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
   const chatEndRef = useRef(null);
+  const answerCacheRef = useRef(new Map());
 
-  // Load/save chat history
+  const SYSTEM_PROMPT = "You are a helpful assistant for vit vellore developed by vikesh. Answer the user’s question directly and concisely. If you are unsure, say you don’t know";
+
   useEffect(() => {
     const savedChat = sessionStorage.getItem("chatBotHistory");
     if (savedChat) {
@@ -89,7 +91,6 @@ const Chatbot = () => {
     }
   }, [chat]);
 
-  // Auto-scroll to bottom
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
@@ -112,210 +113,74 @@ const Chatbot = () => {
     sendQuestion(questionText);
   };
 
-  // Function to get answers from Gemini API
-  const getGeminiAnswer = async (userMessage) => {
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const extractRetryDelayMs = (error) => {
+    const retryAfterHeader = error?.response?.headers?.["retry-after"];
+    if (retryAfterHeader) {
+      const retrySeconds = Number(retryAfterHeader);
+      if (!Number.isNaN(retrySeconds)) return Math.ceil(retrySeconds * 1000);
+    }
+    return 0;
+  };
+
+  const getGroqAnswer = async (userMessage) => {
     try {
-      console.log("Using Gemini API...");
+      console.log("Using Groq API...");
 
-      // Enhanced prompt with student/faculty information
-      const prompt = `You are a helpful chatbot that provides accurate information about VIT (Vellore Institute of Technology).
+      const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+      if (!apiKey) {
+        throw new Error("Missing API key. Please set VITE_GROQ_API_KEY.");
+      }
 
-      You are developed by Vikesh.
+      const requestPayload = {
+        model: "llama-3.3-70b-versatile",
+        messages: [
+          ...(SYSTEM_PROMPT
+            ? [{ role: "system", content: SYSTEM_PROMPT }]
+            : []),
+          { role: "user", content: userMessage },
+        ],
+        temperature: 0.6,
+        max_tokens: 300,
+      };
 
-Key facts about VIT University:
-- Founded: 1984 as Vellore Engineering College, renamed VIT in 2001
-- Total student count: Approximately 55,000+ students across all campuses with 35,000+ at VIT Vellore
-- Faculty members: Over 2,000 highly qualified professors and educators with 60% holding PhDs
-- Student-faculty ratio: 12:1
-- International students: 7,500+ from 85+ countries
-- Research papers published: 25,000+ publications in Scopus-indexed journals
-- Campus size: Main Vellore campus is 360 acres, Chennai campus is 120 acres
-- Accreditations: NAAC 'A++' grade, NBA accreditation, ABET accreditation for engineering programs
-- Rankings: Consistently ranked among top 3 private engineering institutions in India by NIRF
-- QS World University Rankings: Ranked in 651-700 band globally
+      const endpoint = "https://api.groq.com/openai/v1/chat/completions";
 
-Campus Locations:
-- VIT Vellore: Main campus in Vellore, Tamil Nadu
-- VIT Chennai: Secondary campus in Chennai, Tamil Nadu
-- VIT-AP: Campus in Amaravati, Andhra Pradesh
-- VIT Bhopal: Campus in Bhopal, Madhya Pradesh
-- VIT Bangalore: Campus in Bangalore, Karnataka
-
-Academic Schools & Programs:
-- School of Engineering (SENSE, SCOPE, SMEC, SCHEME, etc.)
-- School of Computer Science and Engineering (SCOPE)
-- School of Electronics Engineering (SENSE)
-- School of Mechanical Engineering (SMEC)
-- School of Bio Sciences and Technology (SBST)
-- VIT Business School (VITBS)
-- School of Fashion Design & Arts (SFDA)
-- School of Law (SOL)
-- School of Architecture (SOA)
-- School of Advanced Sciences (SAS)
-- Offers 90+ undergraduate, postgraduate, and doctoral programs
-
-Fee Structure (Academic Programs):
-- B.Tech programs: ₹2.15-2.75 lakhs per annum
-- B.Tech (Specializations): ₹2.45-3.25 lakhs per annum
-- B.Tech Computer Science specializations: ₹2.95-3.45 lakhs per annum
-- M.Tech programs: ₹1.85-2.25 lakhs per annum
-- MBA programs: ₹6.50-7.50 lakhs (total for 2 years)
-- MCA programs: ₹1.75-2.15 lakhs per annum
-- BCA programs: ₹90000-1 lakhs per annum
-- B.Arch: ₹2.25 lakhs per annum
-- B.Des: ₹2.10 lakhs per annum
-- M.Sc programs: ₹1.25-1.75 lakhs per annum
-- Ph.D. programs: ₹1.10-1.50 lakhs per annum
-- Caution deposit (refundable): ₹2,000-10,000
-
-Admissions:
-- VITEEE: VIT Engineering Entrance Examination for B.Tech admissions
-- VITSAT: For management program admissions
-- International admissions through SAT scores or VITEEE
-- Ph.D. admissions throughout the year
-- Entry based on merit and counseling process
-- VITMEE: VIT Management Entrance Examination for MBA and MCA admissions
-
-Placements:
-- 800+ companies visit annually for campus recruitment
-- Average placement rate: 96% for eligible students
-- Highest salary package (2024): ₹75 LPA
-- Average salary package: ₹8.5 LPA
-- Top recruiters: Microsoft, Amazon, Google, Goldman Sachs, JP Morgan Chase, IBM, Oracle, Deloitte
-- Super Dream offers (20+ LPA): 500+ students annually
-- Dream offers (10-20 LPA): 2,500+ students annually
-- Core sector placement rate: 80%+
-- Pre-placement offers through internships: 25%+ of students
-
-Hostels & Accommodation:
-- 24 men's hostels and 9 women's hostels at Vellore campus
-- Men's hostels: M1-M12, L, K, J, Q, N, P, R Blocks and MH Extension blocks
-- Women's hostels: Ladies Hostel (LH) Blocks 1-9
-- AC and non-AC options available
-- Types: Single occupancy, double sharing, triple sharing, and four sharing
-- Amenities: Wi-Fi, 24/7 hot water, laundry services, gym, recreation areas
-- Separate international hostels with enhanced facilities
-- Capacity to accommodate 22,000+ students on-campus
-- Off-campus housing options available in surrounding areas
-
-Hostel Fee Structure:
-- Men's Hostel (Non-AC):
-  * Single occupancy: ₹85,000-95,000 per year
-  * Double sharing: ₹70,000-80,000 per year
-  * Triple sharing: ₹55,000-65,000 per year
-  * Four sharing: ₹45,000-55,000 per year
-- Men's Hostel (AC):
-  * Single occupancy: ₹125,000-135,000 per year
-  * Double sharing: ₹110,000-120,000 per year
-  * Triple sharing: ₹95,000-105,000 per year
-- Women's Hostel (Non-AC):
-  * Single occupancy: ₹90,000-100,000 per year
-  * Double sharing: ₹75,000-85,000 per year
-  * Triple sharing: ₹60,000-70,000 per year
-  * Four sharing: ₹50,000-60,000 per year
-- Women's Hostel (AC):
-  * Single occupancy: ₹130,000-140,000 per year
-  * Double sharing: ₹115,000-125,000 per year
-  * Triple sharing: ₹100,000-110,000 per year
-- One-time hostel caution deposit (refundable): ₹15,000
-- Additional establishment charges: ₹15,000 per year
-- Electricity charges: As per actual usage (prepaid system)
-
-Mess Fee Structure:
-- Standard Mess Plan: ₹60,000-65,000 per year
-- Special Diet Mess: ₹70,000-80,000 per year
-- Veg-only Option: ₹55,000-60,000 per year
-- Food court coupons (optional): As per usage
-
-Campus Life:
-- Student clubs: 120+ technical, cultural, and social clubs
-- Technical chapters: IEEE, ACM, CSI, ASME, SAE, etc.
-- Cultural festivals: Riviera (annual cultural fest), GraVITas (technical fest)
-- Sports facilities: Olympic-sized swimming pool, cricket grounds, tennis courts, basketball courts
-- Fitness centers: Multiple gyms and sports facilities
-- Annual events: TEDxVIT, Vibrance, VIT Startup Summit, Hackathons
-- Community service: NSS, NCC, Rotaract, social outreach programs
-- Research centers: 50+ specialized research centers
-- Innovation centers: VIT-TBI (Technology Business Incubator), V-SPARK
-
-Special Programs:
-- FFCS (Fully Flexible Credit System): Choose courses, faculty, and timings
-- International transfer programs with 300+ partner universities
-- Semester abroad program in 50+ countries
-- VITSAT program for international education and exchange
-- Foreign Languages & Regional Languages (FLRL) programs
-- Industry-sponsored labs: IBM, Cisco, Dell, NVIDIA, Siemens, etc.
-
-Infrastructure:
-- Central library with 500,000+ books and digital resources
-- Wi-Fi enabled campus with 10 Gbps internet connectivity
-- 500+ smart classrooms and 300+ research labs
-- Convention center with 5,000+ seating capacity
-- Anna Auditorium (2,500+ capacity) and multiple seminar halls
-- 24/7 medical center with ambulance services
-- Shopping complex and multiple food courts
-- On-campus bank branches and ATMs
-- Shuttle services within campus
-
-Nearby Places:
-- Vellore Fort & Museum (10 km)
-- Golden Temple Sripuram (18 km)
-- Yelagiri Hills (85 km)
-- Chennai International Airport (130 km)
-- Kanchipuram (70 km)
-- Tiruvannamalai (85 km)
-- Bangalore (220 km)
-- Local attractions: Amirthi Zoological Park, Jalakandeswarar Temple, Vainu Bappu Observatory
-
-Transportation:
-- VIT shuttle services to Vellore city
-- Railway station: Katpadi Junction (5 km)
-- Bus station: Vellore New Bus Stand (8 km)
-- Airport connections to Chennai and Bangalore
-- Campus cab services
-
-Notable Alumni:
-- Founders/CEOs at major startups and tech companies
-- Senior executives at Fortune 500 companies
-- Distinguished researchers and academicians
-- Civil servants and government officials
-- Entrepreneurs and business leaders
-
-Answer questions about VIT University, its programs, admissions, placements, hostels, location, campus life, etc.
-- Be concise (1-2 short paragraphs max)
-- If unsure, say "I don't have that information"
-- Maintain a helpful, informative tone
-- Prioritize recent and accurate information
-
-Question: "${userMessage}"`;
-
-      // Fix: Use the working gemini-2.0-flash model endpoint from the second code
-      const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${
-          import.meta.env.VITE_AI_API_KEY
-        }`,
-        {
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.2,
-            maxOutputTokens: 300,
-          },
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-          timeout: 10000,
+      let response;
+      let attempt = 0;
+      const maxRetries = 2;
+      while (attempt <= maxRetries) {
+        try {
+          response = await axios.post(endpoint, requestPayload, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${apiKey}`,
+            },
+            timeout: 10000,
+          });
+          break;
+        } catch (error) {
+          const status = error?.response?.status;
+          if (status === 429 && attempt < maxRetries) {
+            const retryDelayMs = extractRetryDelayMs(error) || 1000 * 2 ** attempt;
+            await delay(retryDelayMs);
+            attempt += 1;
+            continue;
+          }
+          throw error;
         }
-      );
+      }
 
-      if (response.data.candidates?.[0]?.content?.parts?.[0]?.text) {
-        console.log("Gemini API successful");
-        return response.data.candidates[0].content.parts[0].text;
+      if (response.data.choices?.[0]?.message?.content) {
+        console.log("Groq API successful");
+        return response.data.choices[0].message.content;
       } else {
         console.log("Invalid API response format");
         throw new Error("Invalid API response format");
       }
     } catch (error) {
-      console.error("Gemini API Error:", error);
+      console.error("Groq API Error:", error);
       throw error;
     }
   };
@@ -323,6 +188,26 @@ Question: "${userMessage}"`;
   const sendQuestion = async (overrideQuestion = null) => {
     const trimmedQuestion = (overrideQuestion || question).trim();
     if (!trimmedQuestion || isLoading) return;
+
+    const cachedAnswer = answerCacheRef.current.get(trimmedQuestion);
+    if (cachedAnswer) {
+      setChat((prev) => [
+        ...prev,
+        {
+          text: trimmedQuestion,
+          isBot: false,
+          timestamp: Date.now(),
+        },
+        {
+          text: cachedAnswer,
+          isBot: true,
+          timestamp: Date.now(),
+          source: "cache",
+        },
+      ]);
+      setQuestion("");
+      return;
+    }
 
     setIsLoading(true);
     setQuestion("");
@@ -338,8 +223,10 @@ Question: "${userMessage}"`;
     ]);
 
     try {
-      // Get answer from Gemini
-      const answer = await getGeminiAnswer(trimmedQuestion);
+      // Get answer from Groq
+      const answer = await getGroqAnswer(trimmedQuestion);
+
+      answerCacheRef.current.set(trimmedQuestion, answer);
 
       // Add bot response
       setChat((prev) => [
@@ -348,15 +235,22 @@ Question: "${userMessage}"`;
           text: answer,
           isBot: true,
           timestamp: Date.now(),
-          source: "gemini",
+          source: "groq",
         },
       ]);
     } catch (error) {
       console.error("Error getting answer:", error);
+      const status = error?.response?.status;
+      const isQuota = status === 429;
+      const errorMessage = isQuota
+        ? "The AI service is rate-limited right now. Please wait a few seconds and try again."
+        : error?.message?.includes("Missing API key")
+        ? "Missing API key. Please configure VITE_GROQ_API_KEY and try again."
+        : "I'm sorry, I encountered an error processing your request. Please try again or ask a different question about VIT.";
       setChat((prev) => [
         ...prev,
         {
-          text: "I'm sorry, I encountered an error processing your request. Please try again or ask a different question about VIT.",
+          text: errorMessage,
           isBot: true,
           timestamp: Date.now(),
           source: "error",
@@ -465,12 +359,12 @@ Question: "${userMessage}"`;
                       {msg.isBot && msg.source && (
                         <span
                           className={`ml-2 px-1 rounded ${
-                            msg.source === "gemini"
+                            msg.source === "groq"
                               ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
                               : ""
                           }`}
                         >
-                          {msg.source === "gemini" ? "AI" : ""}
+                          {msg.source === "groq" ? "AI" : ""}
                         </span>
                       )}
                     </div>
@@ -565,7 +459,7 @@ Question: "${userMessage}"`;
         {/* API indicator in input area */}
         <div className="flex justify-center mt-1 md:mt-2">
           <div className="text-2xs md:text-xs text-gray-500 dark:text-gray-400 flex items-center">
-            <span>Powered by Google Gemini API</span>
+            <span>Powered by Groq API (Free)</span>
           </div>
         </div>
       </div>
