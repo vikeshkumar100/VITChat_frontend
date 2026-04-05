@@ -262,7 +262,7 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100dvh-3.5rem-4rem)] md:h-[calc(100dvh-4rem)] w-full mt-14 md:mt-16 min-h-0 bg-gradient-to-b from-cyan-50/70 to-white dark:from-slate-900 dark:to-slate-950">
+    <div className="flex flex-col h-[calc(100svh-3.5rem-4rem)] md:h-[calc(100dvh-4rem)] w-full mt-14 md:mt-16 min-h-0 bg-gradient-to-b from-cyan-50/70 to-white dark:from-slate-900 dark:to-slate-950">
       <div className="px-3 py-2 border-b border-cyan-100 dark:border-slate-800 bg-white/90 dark:bg-slate-950/70 backdrop-blur-md flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 min-w-0">
           <div className="p-1.5 rounded-lg bg-cyan-100 dark:bg-cyan-500/20">
@@ -460,7 +460,7 @@ const Chatbot = () => {
       <div className="bg-white/95 dark:bg-slate-950/85 backdrop-blur border-t border-cyan-100 dark:border-slate-800 p-2.5 md:p-2">
         <div className="flex items-center max-w-4xl mx-auto rounded-2xl border border-cyan-200 dark:border-slate-700 bg-cyan-50/90 dark:bg-slate-900 p-1.5">
           <textarea
-            className="flex-1 bg-transparent py-2 px-2.5 md:px-3 focus:outline-none text-slate-800 dark:text-white resize-none text-sm md:text-base placeholder:text-slate-400"
+            className="flex-1 bg-transparent py-2 px-2.5 md:px-3 focus:outline-none text-slate-800 dark:text-white resize-none text-base md:text-base placeholder:text-slate-400"
             placeholder="Ask anything about VIT..."
             value={question}
             onChange={(e) => setQuestion(e.target.value)}

@@ -95,7 +95,7 @@ const RandomChat = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100dvh-3.5rem-4rem)] md:h-[calc(100dvh-4rem)] w-full mt-14 md:mt-16 min-h-0 bg-gradient-to-b from-sky-50/70 to-white dark:from-slate-900 dark:to-slate-950">
+    <div className="flex flex-col h-[calc(100svh-3.5rem-4rem)] md:h-[calc(100dvh-4rem)] w-full mt-14 md:mt-16 min-h-0 bg-gradient-to-b from-sky-50/70 to-white dark:from-slate-900 dark:to-slate-950">
       <div className="px-3 py-2 border-b border-sky-100 dark:border-slate-800 bg-white/90 dark:bg-slate-950/70 backdrop-blur-md">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0">
@@ -247,7 +247,7 @@ const RandomChat = () => {
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyPress}
               placeholder="Type your message..."
-              className="w-full bg-transparent px-2.5 py-2 text-sm md:text-base focus:outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400"
+              className="w-full bg-transparent px-2.5 py-2 text-base md:text-base focus:outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400"
             />
             <button
               onClick={sendMessage}

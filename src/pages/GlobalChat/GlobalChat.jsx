@@ -113,7 +113,7 @@ const GlobalChat = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100dvh-3.5rem-4rem)] md:h-[calc(100dvh-4rem)] w-full mt-14 md:mt-16 min-h-0">
+    <div className="flex flex-col h-[calc(100svh-3.5rem-4rem)] md:h-[calc(100dvh-4rem)] w-full mt-14 md:mt-16 min-h-0">
       {/* Chat Header */}
       <div className="px-2 md:px-4 py-2 bg-white dark:bg-gray-800 border-b dark:border-gray-700 shadow-sm">
         <div className="flex items-center justify-between w-full px-2 md:px-4 max-w-7xl mx-auto gap-2">
@@ -232,7 +232,7 @@ const GlobalChat = () => {
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyPress}
               placeholder="Share your thoughts with the VIT community..."
-              className="w-full p-3 md:p-4 pr-24 md:pr-16 rounded-xl bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 text-sm md:text-base"
+              className="w-full p-3 md:p-4 pr-24 md:pr-16 rounded-xl bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 text-base md:text-base"
             />
             <button
               onClick={sendMessage}
