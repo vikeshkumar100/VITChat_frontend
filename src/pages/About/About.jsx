@@ -37,7 +37,7 @@ const About = () => {
       <div className="absolute z-[-1] top-1/3 -right-10 md:w-96 w-52 md:h-96 h-52 bg-cyan-300/25 rounded-full blur-[140px] dark:opacity-40"></div>
       
       {/* hero section  */}
-      <div className="w-full min-h-screen flex flex-col lg:flex-row gap-10 lg:gap-12 justify-between items-center py-8">
+      <div className="w-full min-h-screen flex flex-col lg:flex-row gap-8 lg:gap-12 justify-between items-center py-6 md:py-8">
         <div className="h-full max-w-xl">
           <p className="inline-flex items-center rounded-full border border-sky-200 dark:border-slate-700 bg-white/75 dark:bg-slate-900/60 px-4 py-1 text-xs tracking-[0.18em] uppercase text-sky-700 dark:text-sky-300 mb-4">
             About VITChat
@@ -58,10 +58,10 @@ const About = () => {
           </div>
         </div>
 
-        <div className="relative">
+        <div className="relative w-full max-w-[360px] md:max-w-none">
           <div className="absolute -inset-4 bg-gradient-to-br from-sky-300/30 to-cyan-300/20 dark:from-sky-500/20 dark:to-cyan-400/10 blur-2xl rounded-[3rem]" />
           <div className="relative rounded-[2.5rem] border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/40 px-2 pt-6 pb-2 shadow-xl">
-            <Iphone15Pro className="h-[560px] md:h-[620px]" src={chatpage} />
+            <Iphone15Pro className="h-[420px] sm:h-[520px] md:h-[620px]" src={chatpage} />
           </div>
         </div>
       </div>

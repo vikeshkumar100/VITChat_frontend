@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import socket from "../../lib/socket";
+import { MessageCircleHeart, Loader2, UserRound, ArrowRight } from "lucide-react";
 
 const RandomChat = () => {
   const [message, setMessage] = useState("");
@@ -17,12 +18,13 @@ const RandomChat = () => {
 
   useEffect(() => {
     const handleReceiveMessage = (newMessage) => {
-      // Filter out duplicates using timestamp and sender ID
       setMessages((prev) => {
-        const exists = prev.some(
-          (msg) =>
-            msg.time === newMessage.time && msg.senderId === newMessage.senderId
-        );
+        const exists = prev.some((msg) => {
+          if (newMessage?.id && msg?.id) {
+            return msg.id === newMessage.id;
+          }
+          return msg.time === newMessage.time && msg.senderId === newMessage.senderId;
+        });
         return exists ? prev : [...prev, newMessage];
       });
     };
@@ -72,33 +74,14 @@ const RandomChat = () => {
           hour: "2-digit",
           minute: "2-digit",
         }),
-        // Add unique message ID
         id: Date.now() + Math.random().toString(36).substr(2, 9),
       };
 
-      // Add message immediately to local state
       setMessages((prev) => [...prev, newMessage]);
       socket.emit("sendMessage", newMessage);
       setMessage("");
     }
   };
-
-  // Update message handler
-  useEffect(() => {
-    const handleReceiveMessage = (newMessage) => {
-      setMessages((prev) => {
-        // Check for duplicate using unique ID
-        const exists = prev.some((msg) => msg.id === newMessage.id);
-        return exists ? prev : [...prev, newMessage];
-      });
-    };
-
-    socket.on("receiveMessage", handleReceiveMessage);
-
-    return () => {
-      socket.off("receiveMessage", handleReceiveMessage);
-    };
-  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -112,121 +95,104 @@ const RandomChat = () => {
   };
 
   return (
-    <div className="pt-16 flex flex-col h-screen w-full">
-      {/* Chat Header */}
-      <div className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-gray-800 dark:to-gray-900 border-b border-white/20 w-full shadow-lg">
-        <div className="flex items-center md:justify-between justify-end w-full">
-          <h1 className="hidden md:flex text-xl font-bold text-white items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-white"
-            >
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-              <path d="M13 8H7" />
-              <path d="M17 12H7" />
-            </svg>
-            VIT Random Chat
-          </h1>
+    <div className="flex flex-col h-[calc(100dvh-3.5rem-4rem)] md:h-[calc(100dvh-4rem)] w-full mt-14 md:mt-16 min-h-0 bg-gradient-to-b from-sky-50/70 to-white dark:from-slate-900 dark:to-slate-950">
+      <div className="px-3 py-2 border-b border-sky-100 dark:border-slate-800 bg-white/90 dark:bg-slate-950/70 backdrop-blur-md">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="p-1.5 rounded-lg bg-sky-100 dark:bg-sky-500/20">
+              <MessageCircleHeart className="w-4 h-4 text-sky-600 dark:text-sky-300" />
+            </div>
+            <div className="min-w-0">
+              <h1 className="text-sm md:text-base font-semibold text-slate-900 dark:text-slate-100 truncate">
+                Random Chat
+              </h1>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block">
+                Meet a new VITian instantly
+              </p>
+            </div>
+          </div>
 
-          {status === "connected" && (
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+          <span
+            className={`text-[11px] md:text-xs font-semibold px-2.5 py-1 rounded-full ${
+              status === "connected"
+                ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300"
+                : status === "searching"
+                ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300"
+                : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+            }`}
+          >
+            {status === "connected" ? "Connected" : status === "searching" ? "Searching" : "Idle"}
+          </span>
+        </div>
+
+        {status === "connected" && (
+          <div className="mt-2 flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 min-w-0 rounded-full bg-sky-100/70 dark:bg-slate-800/80 px-2.5 py-1.5">
+              {partner?.profilePic ? (
                 <img
                   src={partner?.profilePic}
                   alt={partner?.name}
-                  className="w-8 h-8 rounded-full border-2 border-white/20"
+                  className="w-7 h-7 rounded-full object-cover"
                 />
-                <div className="flex flex-col">
-                  <span className="text-sm font-medium text-white">
-                    {partner?.name}
-                  </span>
-                  <span className="text-xs text-blue-100">Online</span>
+              ) : (
+                <div className="w-7 h-7 rounded-full bg-sky-200 dark:bg-slate-700 grid place-items-center">
+                  <UserRound className="w-4 h-4 text-sky-700 dark:text-slate-300" />
                 </div>
+              )}
+              <div className="min-w-0">
+                <p className="text-xs md:text-sm font-medium text-slate-900 dark:text-slate-100 truncate">
+                  {partner?.name || "Anonymous"}
+                </p>
+                <p className="text-[10px] md:text-xs text-slate-500 dark:text-slate-400">Online now</p>
               </div>
-              <button
-                onClick={disconnectChat}
-                className="px-4 py-2 text-sm font-medium text-white bg-red-500/90 hover:bg-red-600 rounded-full transition-colors"
-              >
-                End Chat
-              </button>
             </div>
-          )}
-        </div>
+            <button
+              onClick={disconnectChat}
+              className="shrink-0 px-3 py-1.5 text-[11px] md:text-xs font-semibold text-white bg-rose-500 hover:bg-rose-600 rounded-full transition-colors"
+            >
+              End
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Chat Messages Area */}
-      <div className="pt-56 md:pt-6 flex-1 overflow-y-auto w-full px-4 py-6">
-        {messages.length === 0 && status === "idle" ? (
-          <div className="h-full flex flex-col items-center justify-center gap-8 text-center">
-            <div className="max-w-2xl mx-auto px-4">
-              <div className="space-y-6">
-                <div className="inline-flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 p-4 rounded-2xl">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="64"
-                    height="64"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="text-white"
-                  >
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                    <path d="M8 10h.01" />
-                    <path d="M12 10h.01" />
-                    <path d="M16 10h.01" />
-                  </svg>
+      <div className="flex-1 min-h-0 overflow-y-auto w-full px-3 md:px-4 py-4 md:py-6">
+        {status === "searching" ? (
+          <div className="h-full grid place-items-center">
+            <div className="w-full max-w-sm rounded-2xl border border-sky-100 dark:border-slate-800 bg-white/90 dark:bg-slate-900/80 p-5 text-center shadow-sm">
+              <Loader2 className="w-8 h-8 text-sky-500 mx-auto animate-spin" />
+              <h2 className="mt-3 text-lg font-semibold text-slate-900 dark:text-slate-100">Finding someone...</h2>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Matching you with another VIT student.</p>
+            </div>
+          </div>
+        ) : messages.length === 0 && status === "idle" ? (
+          <div className="h-full flex flex-col items-center justify-center text-center">
+            <div className="w-full max-w-md rounded-3xl border border-sky-100 dark:border-slate-800 bg-white/90 dark:bg-slate-900/80 p-6 shadow-sm">
+              <div className="w-14 h-14 rounded-2xl mx-auto bg-gradient-to-br from-sky-500 to-cyan-500 grid place-items-center text-white text-2xl">
+                💬
+              </div>
+              <h2 className="mt-4 text-xl md:text-2xl font-bold text-slate-900 dark:text-slate-100">
+                Meet Someone New
+              </h2>
+              <p className="mt-2 text-sm md:text-base text-slate-500 dark:text-slate-400">
+                Start a private random conversation with another VITian.
+              </p>
+
+              <div className="mt-5 grid grid-cols-1 gap-2 text-left">
+                <div className="rounded-xl bg-sky-50 dark:bg-slate-800/70 px-3 py-2 text-sm text-slate-700 dark:text-slate-200">
+                  1. Tap Start Random Chat
                 </div>
-
-                <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-                  Start Connecting with VITians!
-                </h2>
-
-                <p className="text-gray-500 dark:text-gray-400 text-lg">
-                  Meet random students from VIT, share ideas, and make new
-                  connections
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-                  <div className="p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700">
-                    <div className="text-blue-500 text-2xl mb-2">🌐</div>
-                    <h3 className="font-semibold mb-2">Instant Matching</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Connect with another VITian in seconds
-                    </p>
-                  </div>
-
-                  <div className="p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700">
-                    <div className="text-blue-500 text-2xl mb-2">🔒</div>
-                    <h3 className="font-semibold mb-2">Secure & Private</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      End-to-end encrypted conversations
-                    </p>
-                  </div>
-
-                  <div className="p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700">
-                    <div className="text-blue-500 text-2xl mb-2">💡</div>
-                    <h3 className="font-semibold mb-2">Learn Together</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Share knowledge and study resources
-                    </p>
-                  </div>
+                <div className="rounded-xl bg-sky-50 dark:bg-slate-800/70 px-3 py-2 text-sm text-slate-700 dark:text-slate-200">
+                  2. Wait for instant matching
+                </div>
+                <div className="rounded-xl bg-sky-50 dark:bg-slate-800/70 px-3 py-2 text-sm text-slate-700 dark:text-slate-200">
+                  3. Chat and connect safely
                 </div>
               </div>
             </div>
           </div>
         ) : (
-          <div className="w-full space-y-4">
+          <div className="w-full space-y-3 md:space-y-4">
             {messages.map((msg, index) => (
               <div
                 key={index}
@@ -235,29 +201,34 @@ const RandomChat = () => {
                 }`}
               >
                 <div
-                  className={`max-w-[80%] flex gap-3 ${
+                  className={`max-w-[92%] md:max-w-[80%] flex gap-2 md:gap-3 ${
                     msg.senderId === user.id ? "flex-row-reverse" : ""
                   }`}
                 >
-                  <img
-                    src={msg.profilePic}
-                    alt={msg.name}
-                    className="w-8 h-8 rounded-full mt-2"
-                  />
+                  {msg.profilePic ? (
+                    <img
+                      src={msg.profilePic}
+                      alt={msg.name}
+                      className="w-8 h-8 rounded-full mt-1 object-cover"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full mt-1 bg-slate-200 dark:bg-slate-700 grid place-items-center">
+                      <UserRound className="w-4 h-4 text-slate-500 dark:text-slate-300" />
+                    </div>
+                  )}
+
                   <div
-                    className={`p-3 rounded-2xl ${
+                    className={`p-3 rounded-2xl shadow-sm ${
                       msg.senderId === user.id
-                        ? "bg-blue-500 text-white rounded-br-none"
-                        : "bg-gray-100 dark:bg-gray-800 rounded-bl-none"
+                        ? "bg-sky-600 text-white rounded-br-md"
+                        : "bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-bl-md border border-sky-100 dark:border-slate-700"
                     }`}
                   >
-                    <div className="flex items-center justify-between gap-4 mb-1">
-                      <span className="text-sm font-medium">{msg.name}</span>
-                      <span className="text-xs opacity-75">{msg.time}</span>
+                    <div className="flex items-center justify-between gap-3 mb-1">
+                      <span className="text-xs font-semibold opacity-90">{msg.name}</span>
+                      <span className="text-[10px] md:text-xs opacity-75">{msg.time}</span>
                     </div>
-                    <p className="text-sm whitespace-pre-wrap break-words">
-                      {msg.text}
-                    </p>
+                    <p className="text-sm whitespace-pre-wrap break-words leading-relaxed">{msg.text}</p>
                   </div>
                 </div>
               </div>
@@ -267,46 +238,47 @@ const RandomChat = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Area */}
       {status === "connected" ? (
-        <div className="bg-gray-300 dark:bg-gray-800 border-t dark:border-gray-700 w-full">
-          <div className="w-full p-2">
-            <div className="relative w-full">
-              <input
-                type="text"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyDown={handleKeyPress}
-                placeholder="Type your message..."
-                className="w-full p-3 pr-16 rounded-xl bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-              />
-              <button
-                onClick={sendMessage}
-                className="absolute right-2 top-2 px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium"
-              >
-                Send
-              </button>
-            </div>
+        <div className="bg-white/95 dark:bg-slate-950/80 backdrop-blur border-t border-sky-100 dark:border-slate-800 w-full p-2.5">
+          <div className="w-full rounded-2xl border border-sky-200 dark:border-slate-700 bg-sky-50/80 dark:bg-slate-900 p-1.5 flex items-center gap-2">
+            <input
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={handleKeyPress}
+              placeholder="Type your message..."
+              className="w-full bg-transparent px-2.5 py-2 text-sm md:text-base focus:outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400"
+            />
+            <button
+              onClick={sendMessage}
+              disabled={!message.trim()}
+              className="shrink-0 px-3 py-2 rounded-xl text-xs md:text-sm font-semibold bg-sky-600 hover:bg-sky-700 text-white disabled:opacity-50 disabled:hover:bg-sky-600"
+            >
+              Send
+            </button>
           </div>
         </div>
       ) : (
-        <div className="p-8 text-center w-full">
+        <div className="p-3 bg-white/95 dark:bg-slate-950/80 backdrop-blur border-t border-sky-100 dark:border-slate-800">
           <button
             onClick={startRandomChat}
             disabled={status === "searching"}
-            className={`px-8 py-3 text-sm font-medium rounded-full transition-all w-full max-w-md ${
+            className={`px-5 py-3 text-sm font-semibold rounded-2xl transition-all w-full flex items-center justify-center gap-2 ${
               status === "searching"
                 ? "bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed"
-                : "bg-blue-500 hover:bg-blue-600 text-white"
+                : "bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-700 hover:to-cyan-600 text-white"
             }`}
           >
             {status === "searching" ? (
-              <span className="flex items-center gap-2 justify-center">
-                <span className="animate-spin">↻</span>
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
                 Searching for VITians...
-              </span>
+              </>
             ) : (
-              "Start New Random Chat"
+              <>
+                Start Random Chat
+                <ArrowRight className="w-4 h-4" />
+              </>
             )}
           </button>
         </div>

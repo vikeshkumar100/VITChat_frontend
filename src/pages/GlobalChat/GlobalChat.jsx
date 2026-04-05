@@ -113,37 +113,37 @@ const GlobalChat = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full pt-14">
+    <div className="flex flex-col h-[calc(100dvh-3.5rem-4rem)] md:h-[calc(100dvh-4rem)] w-full mt-14 md:mt-16 min-h-0">
       {/* Chat Header */}
-      <div className="px-4 py-2 bg-white dark:bg-gray-800 border-b dark:border-gray-700 shadow-sm">
-        <div className="flex items-center justify-between w-full px-4 max-w-7xl mx-auto">
+      <div className="px-2 md:px-4 py-2 bg-white dark:bg-gray-800 border-b dark:border-gray-700 shadow-sm">
+        <div className="flex items-center justify-between w-full px-2 md:px-4 max-w-7xl mx-auto gap-2">
           <div className="flex items-center gap-3">
-            <MessageCircle className="w-7 h-7 text-blue-500" />
+            <MessageCircle className="w-6 h-6 md:w-7 md:h-7 text-blue-500" />
             <h1 className="hidden md:block text-2xl font-bold text-gray-800 dark:text-white">
               VIT Global Chat
             </h1>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3 bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-full">
-              <Users className="w-5 h-5 text-blue-500" />
-              <div className="flex gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
+            <div className="flex items-center gap-2 md:gap-3 bg-gray-100 dark:bg-gray-700 px-2 md:px-4 py-2 rounded-full">
+              <Users className="w-4 h-4 md:w-5 md:h-5 text-blue-500" />
+              <div className="flex gap-2 md:gap-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                  <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300">
                     Active
                   </span>
                   <NumberTicker
                     value={activeUsers}
-                    className="font-semibold text-gray-800 dark:text-white"
+                    className="font-semibold text-sm md:text-base text-gray-800 dark:text-white"
                   />
                 </div>
-                <div className="h-6 w-px bg-gray-300 dark:bg-gray-600" />
+                <div className="h-5 md:h-6 w-px bg-gray-300 dark:bg-gray-600" />
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                  <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300">
                     Registered
                   </span>
                   <NumberTicker
                     value={registeredUsers}
-                    className="font-semibold text-gray-800 dark:text-white"
+                    className="font-semibold text-sm md:text-base text-gray-800 dark:text-white"
                   />
                 </div>
               </div>
@@ -153,7 +153,7 @@ const GlobalChat = () => {
       </div>
 
       {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 w-full">
+      <div className="flex-1 min-h-0 overflow-y-auto px-3 md:px-4 py-4 md:py-6 w-full">
         {isHistoryLoading ? (
           <div className="h-full flex flex-col items-center justify-center text-center p-8">
             <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-2">
@@ -190,27 +190,27 @@ const GlobalChat = () => {
                 }`}
               >
                 <div
-                  className={`max-w-[85%] flex gap-3 ${
+                  className={`max-w-[92%] md:max-w-[85%] flex gap-2 md:gap-3 ${
                     msg.id === user.id ? "flex-row-reverse" : ""
                   }`}
                 >
                   <img
                     src={msg.profilePic}
                     alt={msg.name}
-                    className="w-9 h-9 rounded-full border-2 border-white dark:border-gray-800 shadow-sm"
+                    className="w-8 h-8 md:w-9 md:h-9 rounded-full border-2 border-white dark:border-gray-800 shadow-sm"
                   />
                   <div
-                    className={`p-4 rounded-2xl shadow-sm ${
+                    className={`p-3 md:p-4 rounded-2xl shadow-sm ${
                       msg.id === user.id
                         ? "bg-blue-500 text-white rounded-br-none"
                         : "bg-gray-100 dark:bg-gray-800 rounded-bl-none"
                     }`}
                   >
                     <div className="flex items-center justify-between gap-4 mb-2">
-                      <span className="text-sm font-semibold">{msg.name}</span>
+                      <span className="text-xs md:text-sm font-semibold">{msg.name}</span>
                       <span className="text-xs opacity-80">{msg.time}</span>
                     </div>
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
+                    <p className="text-xs md:text-sm leading-relaxed whitespace-pre-wrap break-words">
                       {msg.text}
                     </p>
                   </div>
@@ -232,15 +232,15 @@ const GlobalChat = () => {
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyPress}
               placeholder="Share your thoughts with the VIT community..."
-              className="w-full p-4 pr-16 rounded-xl bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200"
+              className="w-full p-3 md:p-4 pr-24 md:pr-16 rounded-xl bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 text-sm md:text-base"
             />
             <button
               onClick={sendMessage}
               disabled={!message.trim()}
-              className="absolute right-2 top-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:hover:bg-blue-500 flex items-center gap-2"
+              className="absolute right-2 top-1.5 md:top-2 px-3 md:px-4 py-1.5 md:py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl text-xs md:text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:hover:bg-blue-500 flex items-center gap-1 md:gap-2"
             >
               <Send className="w-4 h-4" />
-              <span>Send</span>
+              <span className="hidden sm:inline">Send</span>
             </button>
           </div>
         </div>

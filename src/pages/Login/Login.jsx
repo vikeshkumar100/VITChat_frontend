@@ -89,22 +89,23 @@ const Login = () => {
       </div>
 
       {/* Login card */}
-      <div className="w-[90vw] sm:w-[80vw] md:w-[50vw] flex flex-col gap-8 text-center fixed top-[45vh] left-[50vw] bg-white/88 dark:bg-slate-900/85 border border-slate-200 dark:border-slate-700 px-6 py-5 md:py-6 md:px-16 rounded-2xl shadow-2xl backdrop-blur-md transform -translate-x-1/2 -translate-y-1/2">
-        <h2 className="text-2xl md:text-5xl text-slate-900 dark:text-white">Welcome to VITChat</h2>
-        <div className="text-lg text-slate-600 dark:text-slate-300">
+      <div className="fixed inset-0 pt-20 pb-6 px-4 flex items-center justify-center pointer-events-none">
+        <div className="w-full max-w-lg md:max-w-2xl pointer-events-auto flex flex-col gap-5 md:gap-8 text-center bg-white/90 dark:bg-slate-900/88 border border-slate-200 dark:border-slate-700 px-4 sm:px-6 py-5 md:py-6 md:px-12 rounded-2xl shadow-2xl backdrop-blur-md">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl text-slate-900 dark:text-white">Welcome to VITChat</h2>
+        <div className="text-base md:text-lg text-slate-600 dark:text-slate-300">
           Exclusive to VIT students - Use your institute email
         </div>
         
         <button
           onClick={handleLoginClick}
           disabled={isProcessing}
-          className={`flex flex-row items-center justify-center gap-2 p-1 md:p-3 text-base md:text-xl font-semibold rounded-xl shadow-xl transition-all ${
+          className={`flex flex-row items-center justify-center gap-2 p-2 md:p-3 text-sm sm:text-base md:text-xl font-semibold rounded-xl shadow-xl transition-all ${
             isProcessing 
               ? "bg-sky-400 cursor-not-allowed text-white" 
               : "bg-sky-600 hover:bg-sky-700 text-white"
           }`}
         >
-          <img src={googleLogo} alt="Google Logo" className="w-10 h-10" />
+          <img src={googleLogo} alt="Google Logo" className="w-8 h-8 md:w-10 md:h-10" />
           {isProcessing ? "Processing..." : "Sign in with Google"}
         </button>
 
@@ -116,6 +117,7 @@ const Login = () => {
 
         <div className="text-slate-500 dark:text-slate-300 text-sm">
           Only @vitstudent.ac.in emails allowed
+        </div>
         </div>
       </div>
     </>

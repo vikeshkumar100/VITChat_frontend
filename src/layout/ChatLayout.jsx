@@ -8,9 +8,11 @@ const ChatLayout = () => {
     <>
       {/* header  */}
       <Header />
-      <div className="flex">
+      <div className="flex flex-col md:flex-row min-h-screen md:h-screen">
         <LeftNavbar />
-        <Outlet />
+        <main className="w-full md:flex-1 min-h-0">
+          <Outlet />
+        </main>
       </div>
     </>
   );

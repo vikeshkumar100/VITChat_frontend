@@ -9,6 +9,8 @@
     background: linear-gradient(180deg, rgba(241, 248, 255, 0.7), rgba(226, 242, 255, 0.92));
     border-top: 1px solid rgba(148, 163, 184, 0.35);
     color: #0f172a;
+    padding: 20px 14px;
+    gap: 14px;
 }
 
 .footer-content {
@@ -20,9 +22,11 @@
     font-size: 40px;
     background-color: transparent;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
     align-items: center;
-    width: min(680px, 85vw);
+    gap: 12px;
+    width: min(680px, 92vw);
     color: #334155;
 }
 
@@ -33,8 +37,8 @@
 
 .footer-icon img {
     background-color: transparent;
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     filter: drop-shadow(0 4px 10px rgba(14, 116, 144, 0.2));
 }
 
@@ -81,12 +85,37 @@
 }
 
 @media only screen and (max-width: 800px) {
+    .footer-box {
+        min-height: 28vh;
+    }
+
     .footer-icon {
         width: 90vw;
-        font-size: 28px;
+        font-size: 24px;
+        gap: 10px;
+    }
+
+    .footer-icon img {
+        width: 28px;
+        height: 28px;
     }
 
     .footer-logo a {
-        font-size: 26px;
+        font-size: 24px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .footer-box {
+        padding: 16px 10px;
+    }
+
+    .footer-icon {
+        width: 96vw;
+        gap: 8px;
+    }
+
+    .footer-logo a {
+        font-size: 22px;
     }
 }

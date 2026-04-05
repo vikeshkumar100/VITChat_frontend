@@ -7,9 +7,9 @@ const ChatHome = () => {
   const [isSplineLoaded, setIsSplineLoaded] = useState(false);
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full min-h-screen pt-14 md:pt-16">
       {/* Immediate Chat Box - Always visible */}
-      <div className="fixed w-[30vw] top-[25vh] right-[2vw] text-lg md:text-2xl bg-gray-600/80 dark:bg-gray-600/20 backdrop-blur-lg p-5 rounded-xl shadow-md hover:shadow-current text-blue-200 font-sans z-[9]">
+      <div className="relative z-[9] mx-4 mt-4 md:mt-8 md:mx-8 md:max-w-lg md:ml-auto text-base md:text-xl bg-gray-700/85 dark:bg-gray-700/30 backdrop-blur-lg p-4 md:p-5 rounded-xl shadow-md text-blue-100 font-sans">
         <Link
           to="/chat/global-chat"
           className="text-blue-400 hover:text-blue-500 flex items-center gap-2"
@@ -23,23 +23,38 @@ const ChatHome = () => {
       </div>
 
       {/* Spline Container with Loading State */}
-      <div className="flex w-full justify-center items-center h-screen p-4">
-        <Suspense fallback={null}>
-          <Spline
-            scene="https://prod.spline.design/EdkG9NcJg5BcqIQA/scene.splinecode"
-            onLoad={() => setIsSplineLoaded(true)}
-            className={`transition-opacity duration-1000 ${
-              isSplineLoaded ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        </Suspense>
+      <div className="flex w-full justify-center items-center h-[50vh] md:h-[75vh] p-2 md:p-4">
+        <div className="hidden md:block w-full h-full">
+          <Suspense fallback={null}>
+            <Spline
+              scene="https://prod.spline.design/EdkG9NcJg5BcqIQA/scene.splinecode"
+              onLoad={() => setIsSplineLoaded(true)}
+              className={`transition-opacity duration-1000 ${
+                isSplineLoaded ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          </Suspense>
 
-        {/* Loading Indicator */}
-        {!isSplineLoaded && (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center">
-            <div className="animate-pulse">Loading 3D environment...</div>
-          </div>
-        )}
+          {/* Loading Indicator */}
+          {!isSplineLoaded && (
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center">
+              <div className="animate-pulse">Loading 3D environment...</div>
+            </div>
+          )}
+        </div>
+
+        <div className="md:hidden w-full max-w-md rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/55 p-6 text-center shadow-lg">
+          <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Ready to Chat?</h2>
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            Jump into global chat and connect with VITians instantly.
+          </p>
+          <Link
+            to="/chat/global-chat"
+            className="mt-4 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          >
+            Open Global Chat <SquareArrowOutUpRight size={16} />
+          </Link>
+        </div>
       </div>
     </div>
   );

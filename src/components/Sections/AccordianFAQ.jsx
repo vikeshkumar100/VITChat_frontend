@@ -43,15 +43,15 @@ const FAQ = [
 
 const AccordianFAQ = () => {
   return (
-    <div className="relative flex flex-col justify-center items-center w-full p-6 rounded-xl pb-32 gap-6">
-      <h2 className="text-3xl md:text-5xl font-bold text-center">
+    <div className="relative flex flex-col justify-center items-center w-full px-4 py-6 md:p-6 rounded-xl pb-20 md:pb-32 gap-4 md:gap-6">
+      <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-center">
         Frequently asked questions
       </h2>
-      <p className="text-gray-500 text-center mb-6">
+      <p className="text-gray-500 text-center mb-4 md:mb-6 text-sm md:text-base">
         Everything you need to know
       </p>
 
-      <div className="md:w-2/3 flex flex-col gap-2">
+      <div className="w-full md:w-2/3 flex flex-col gap-2">
         {FAQ.map((faq, index) => {
           return (
             <Accordion
@@ -61,10 +61,10 @@ const AccordianFAQ = () => {
               key={index}
             >
               <AccordionItem value={String(index)} className="rounded-md">
-                <AccordionTrigger className="font-semibold text-xl" key={index}>
+                <AccordionTrigger className="font-semibold text-base md:text-xl" key={index}>
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-lg">
+                <AccordionContent className="text-sm md:text-lg">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

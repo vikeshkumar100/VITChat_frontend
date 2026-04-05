@@ -4,22 +4,22 @@ import { RainbowButton } from "../magicui/rainbow-button";
 
 const Boxreveal = () => {
   return (
-    <div className="size-full max-w-lg items-center justify-center overflow-hidden pt-8 p-6">
+    <div className="size-full max-w-lg items-center justify-center overflow-hidden pt-4 md:pt-8 px-2 md:p-6">
       <BoxReveal boxColor={"#5046e6"} duration={0.5}>
-        <p className="text-[3.5rem] md:text-7xl font-semibold">
+        <p className="text-5xl sm:text-6xl md:text-7xl font-semibold leading-tight">
           VITChat<span className="text-blue-500">.</span>
         </p>
       </BoxReveal>
 
       <BoxReveal boxColor={"#5046e6"} duration={0.5}>
-        <h2 className="mt-[.5rem] md:text-5xl text-[1rem]">
+        <h2 className="mt-[.5rem] md:text-5xl text-lg sm:text-2xl">
           The Future of{" "}
           <span className="text-blue-500">Student Interaction</span>
         </h2>
       </BoxReveal>
 
       <BoxReveal boxColor={"#5046e6"} duration={0.5}>
-        <div className="my-6 text-lg">
+        <div className="my-4 md:my-6 text-base md:text-lg">
           <p>
             -&gt; VITChat is a student-led platform designed exclusively for VIT
             students to
