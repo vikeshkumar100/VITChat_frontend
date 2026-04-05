@@ -6,9 +6,8 @@ import { NumberTicker } from "../../components/magicui/number-ticker";
 
 const GlobalChat = () => {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState(
-    JSON.parse(sessionStorage.getItem("chatMessages")) || []
-  );
+  const [messages, setMessages] = useState([]);
+  const [isHistoryLoading, setIsHistoryLoading] = useState(true);
   const [activeUsers, setActiveUsers] = useState(0);
   const [registeredUsers, setRegisteredUsers] = useState(0);
   const messagesEndRef = useRef(null);
@@ -24,7 +23,11 @@ const GlobalChat = () => {
   useEffect(() => {
     const fetchRegisteredUsers = async () => {
       try {
-        const res = await axios.get(`${apiurl}/users/registered-users`);
+        const res = await axios.get(`${apiurl}/users/registered-users`, {
+          headers: {
+            Authorization: `Bearer ${storedUser.token}`,
+          },
+        });
         setRegisteredUsers(res.data.registeredUsers);
       } catch (err) {
         console.error("Error fetching registered users:", err);
@@ -33,19 +36,47 @@ const GlobalChat = () => {
 
     const handleNewMessage = (newMessage) => {
       setMessages((prev) => {
-        const updated = [...prev, newMessage];
-        sessionStorage.setItem("chatMessages", JSON.stringify(updated));
-        return updated;
+        const alreadyExists = prev.some((msg) => {
+          if (msg.messageId && newMessage.messageId) {
+            return msg.messageId === newMessage.messageId;
+          }
+
+          return msg.timestamp === newMessage.timestamp && msg.id === newMessage.id;
+        });
+
+        return alreadyExists ? prev : [...prev, newMessage];
       });
     };
 
-    fetchRegisteredUsers();
-    socket.emit("requestActiveUsers");
+    const handleMessageHistory = (history = []) => {
+      setMessages(history);
+      setIsHistoryLoading(false);
+    };
 
+    const handleSocketConnect = () => {
+      socket.emit("requestActiveUsers");
+      socket.emit("requestMessageHistory");
+    };
+
+    const historyFallbackTimeout = setTimeout(() => {
+      setIsHistoryLoading(false);
+    }, 8000);
+
+    fetchRegisteredUsers();
+
+    socket.on("connect", handleSocketConnect);
+    socket.on("messageHistory", handleMessageHistory);
     socket.on("receiveMessage", handleNewMessage);
     socket.on("activeUsers", (count) => setActiveUsers(count));
 
+    if (socket.connected) {
+      handleSocketConnect();
+    }
+
     return () => {
+      clearTimeout(historyFallbackTimeout);
+      socket.off("connect", handleSocketConnect);
+      socket.off("messageHistory", handleMessageHistory);
       socket.off("receiveMessage", handleNewMessage);
       socket.off("activeUsers");
     };
@@ -123,7 +154,16 @@ const GlobalChat = () => {
 
       {/* Messages Container */}
       <div className="flex-1 overflow-y-auto px-4 py-6 w-full">
-        {messages.length === 0 ? (
+        {isHistoryLoading ? (
+          <div className="h-full flex flex-col items-center justify-center text-center p-8">
+            <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-2">
+              Loading conversation...
+            </h3>
+            <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto">
+              Fetching recent global messages from the server.
+            </p>
+          </div>
+        ) : messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center p-8">
             <div className="relative mb-8">
               <Bird className="w-32 h-32 text-blue-400/30 dark:text-blue-600/20 mx-auto animate-float" />
@@ -142,9 +182,9 @@ const GlobalChat = () => {
           </div>
         ) : (
           <div className="w-full mx-auto space-y-4">
-            {messages.map((msg, index) => (
+            {messages.map((msg) => (
               <div
-                key={`${msg.id}-${msg.timestamp}`}
+                key={msg.messageId || `${msg.id}-${msg.timestamp}`}
                 className={`flex ${
                   msg.id === user.id ? "justify-end" : "justify-start"
                 }`}

@@ -4,7 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import router from './AppRouter';
 import { ThemeProvider } from "@/components/theme-provider"
 createRoot(document.getElementById('root')).render(
-  <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+  <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <RouterProvider router={router}/>
     </ThemeProvider>
   

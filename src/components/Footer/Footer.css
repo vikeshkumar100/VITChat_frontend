@@ -1,11 +1,14 @@
 .footer-box {
     position: relative;
-    height: 40vh;
+    min-height: 34vh;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-flow: column nowrap;
+    background: linear-gradient(180deg, rgba(241, 248, 255, 0.7), rgba(226, 242, 255, 0.92));
+    border-top: 1px solid rgba(148, 163, 184, 0.35);
+    color: #0f172a;
 }
 
 .footer-content {
@@ -14,54 +17,76 @@
 }
 
 .footer-icon {
-    /* border: 2px solid red; */
-    font-size: 50px;
+    font-size: 40px;
     background-color: transparent;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 60vw;
+    width: min(680px, 85vw);
+    color: #334155;
 }
 
 .footer-icon a,
-span {
+.footer-icon span {
     background-color: transparent;
 }
 
 .footer-icon img {
     background-color: transparent;
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
+    filter: drop-shadow(0 4px 10px rgba(14, 116, 144, 0.2));
 }
 
 .footer-icon img:hover {
-    width: 45px;
-    height: 45px;
-    transform: rotate(360deg);
-    transition: all ease-in-out 0.4s 0.1s;
+    width: 38px;
+    height: 38px;
+    transform: translateY(-2px) rotate(8deg);
+    transition: all ease-in-out 0.25s;
 }
 
 .footer-icon img:active {
-    width: 35px;
-    height: 35px;
-    transition: all ease-in-out 0.2s;
-    transform: rotate(-360deg);
+    width: 34px;
+    height: 34px;
+    transition: all ease-in-out 0.15s;
+    transform: translateY(0);
 }
 
 .footer-logo a {
-    /* border: 2px solid red; */
     font-size: 32px;
     font-weight: bold;
     text-decoration: none;
-    text-shadow: 0px 4px 15px aqua;
+    color: #0f172a;
+    text-shadow: 0 10px 20px rgba(56, 189, 248, 0.3);
 }
 
 .footer-logo:hover {
-    transition: all ease-in-out 0.3s;
-    transform: scale(110%);
+    transition: all ease-in-out 0.2s;
+    transform: scale(1.05);
 }
+
+.dark .footer-box {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.88), rgba(2, 6, 23, 0.95));
+    border-top: 1px solid rgba(71, 85, 105, 0.5);
+    color: #e2e8f0;
+}
+
+.dark .footer-icon {
+    color: #cbd5e1;
+}
+
+.dark .footer-logo a {
+    color: #f8fafc;
+    text-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
+}
+
 @media only screen and (max-width: 800px) {
     .footer-icon {
-        width: 90vw !important;
+        width: 90vw;
+        font-size: 28px;
+    }
+
+    .footer-logo a {
+        font-size: 26px;
     }
 }

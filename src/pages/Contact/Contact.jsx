@@ -9,9 +9,6 @@ import {
   AlertTriangle,
   Type,
   Send,
-  Bug,
-  Lightbulb,
-  Handshake,
 } from "lucide-react";
 
 const Contact = () => {
@@ -29,7 +26,11 @@ const Contact = () => {
     const queryType = formEl.query_type.value;
     const originalMessage = formEl.message.value;
     const fullMessage = `Query Type: ${queryType}\n\n${originalMessage}`;
-    formEl.message.value = fullMessage;
+    const originalTemplateMessage = formEl.template_message?.value;
+
+    if (formEl.template_message) {
+      formEl.template_message.value = fullMessage;
+    }
 
     emailjs
       .sendForm("service_7fzzmul", "template_kqqxv6h", formEl, {
@@ -39,25 +40,31 @@ const Contact = () => {
         () => {
           success();
           formEl.reset();
+          if (formEl.template_message) {
+            formEl.template_message.value = "";
+          }
           setDisabled(false);
         },
         (error) => {
           failed();
           console.error("FAILED...", error.text);
+          if (formEl.template_message) {
+            formEl.template_message.value = originalTemplateMessage || "";
+          }
           setDisabled(false);
         }
       );
   };
 
   return (
-    <div className="py-28 min-h-screen flex items-center justify-center p-4 bg-gray-300 dark:bg-black">
-      <div className="w-full max-w-2xl bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-slate-100 dark:border-gray-700 p-8 shadow-xl dark:shadow-gray-900/30">
+    <div className="py-28 min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-slate-100 to-sky-50 dark:from-slate-950 dark:to-slate-900">
+      <div className="w-full max-w-2xl bg-white/85 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-slate-200 dark:border-gray-700 p-8 shadow-xl dark:shadow-gray-900/30">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center bg-blue-100 dark:bg-blue-500/10 p-4 rounded-full mb-4">
             <MessageCircle className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
-            Vitchat Support Center
+            VITChat Support Center
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
             How can we assist you today?
@@ -103,37 +110,22 @@ const Contact = () => {
             <select
               name="query_type"
               required
+              defaultValue=""
               className="w-full px-4 py-3 bg-white dark:bg-gray-700/50 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent text-gray-800 dark:text-white appearance-none"
             >
-              <option value="" disabled selected className="text-gray-400">
+              <option value="" disabled className="text-gray-400">
                 Select query type
               </option>
-              <option
-                value="feature-request"
-                className="text-gray-800 dark:text-gray-200"
-              >
-                <Lightbulb className="w-4 h-4 mr-2" />
+              <option value="feature-request" className="text-gray-800 dark:text-gray-200">
                 Feature Request
               </option>
-              <option
-                value="bug-report"
-                className="text-gray-800 dark:text-gray-200"
-              >
-                <Bug className="w-4 h-4 mr-2" />
+              <option value="bug-report" className="text-gray-800 dark:text-gray-200">
                 Bug Report
               </option>
-              <option
-                value="feedback"
-                className="text-gray-800 dark:text-gray-200"
-              >
-                <MessageCircle className="w-4 h-4 mr-2" />
+              <option value="feedback" className="text-gray-800 dark:text-gray-200">
                 General Feedback
               </option>
-              <option
-                value="partnership"
-                className="text-gray-800 dark:text-gray-200"
-              >
-                <Handshake className="w-4 h-4 mr-2" />
+              <option value="partnership" className="text-gray-800 dark:text-gray-200">
                 Partnership Inquiry
               </option>
               <option
@@ -144,6 +136,8 @@ const Contact = () => {
               </option>
             </select>
           </div>
+
+          <input type="hidden" name="template_message" defaultValue="" />
 
           <div className="space-y-2">
             <label className="flex items-center text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">

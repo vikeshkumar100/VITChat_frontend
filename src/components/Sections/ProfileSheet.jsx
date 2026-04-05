@@ -9,6 +9,16 @@ import {
 import { UserRoundPen } from "lucide-react";
 
 const ProfileSheet = ({ name, email, image }) => {
+  const fallbackName = name || "User";
+  const initials = fallbackName
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() || "")
+    .join("") || "U";
+
+  const hasImage = Boolean(image && image.trim());
+
   return (
     <Sheet>
       <SheetTrigger className="w-full">
@@ -26,11 +36,23 @@ const ProfileSheet = ({ name, email, image }) => {
           <div className="flex flex-col items-center space-y-8">
             {/* Profile Picture */}
             <div className="relative">
-              <img 
-                src={image} 
-                alt="Profile" 
-                className="h-32 w-32 rounded-full object-cover border-4 border-gray-100 dark:border-gray-800 shadow-lg"
-              />
+              {hasImage ? (
+                <img
+                  src={image}
+                  alt="Profile"
+                  className="h-32 w-32 rounded-full object-cover border-4 border-gray-100 dark:border-gray-800 shadow-lg"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                    const fallback = e.currentTarget.nextElementSibling;
+                    if (fallback) fallback.classList.remove("hidden");
+                  }}
+                />
+              ) : null}
+              <div
+                className={`h-32 w-32 rounded-full border-4 border-gray-100 dark:border-gray-800 shadow-lg bg-blue-600/80 text-white flex items-center justify-center text-3xl font-semibold ${hasImage ? "hidden" : ""}`}
+              >
+                {initials}
+              </div>
             </div>
 
             {/* User Details */}
@@ -40,7 +62,7 @@ const ProfileSheet = ({ name, email, image }) => {
                   Full Name
                 </label>
                 <div className="p-4 rounded-lg bg-gray-100 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800">
-                  <p className="font-medium text-foreground">{name}</p>
+                  <p className="font-medium text-foreground break-words">{fallbackName}</p>
                 </div>
               </div>
 
@@ -49,7 +71,7 @@ const ProfileSheet = ({ name, email, image }) => {
                   Email Address
                 </label>
                 <div className="p-4 rounded-lg bg-gray-100 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800">
-                  <p className="font-medium text-foreground break-all">{email}</p>
+                  <p className="font-medium text-foreground break-all">{email || "No email available"}</p>
                 </div>
               </div>
             </div>

@@ -13,19 +13,26 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-const LogoutButton = () => {
+const LogoutButton = ({ className = "", onAction, compactOnMobile = false }) => {
   const navigate = useNavigate();
   
   const handleLogout = () => {
     localStorage.removeItem("user");
+    if (onAction) onAction();
     navigate("/login");
   };
+
+  const triggerClassName = `flex w-full items-center rounded-md bg-red-600/70 text-sm text-white hover:bg-red-700/80 overflow-hidden ${
+    compactOnMobile
+      ? "justify-center gap-0 px-0 py-2 lg:justify-start lg:gap-2 lg:px-3"
+      : "justify-start gap-2 px-3 py-2"
+  } ${className}`;
   
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-100 rounded-md bg-red-600/70 text-white">
-        <LogOut className="h-4 w-4" />
-        <span>Logout</span>
+      <AlertDialogTrigger className={triggerClassName}>
+        <LogOut className="h-4 w-4 shrink-0" />
+        <span className={compactOnMobile ? "hidden lg:inline" : "inline"}>Logout</span>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

@@ -13,7 +13,7 @@ import ProfileButton from "../Buttons/ProfileButton";
 const LeftNavbar = () => {
   return (
     <>
-      <div className="flex flex-col gap-2 lg:justify-between w-12 min-h-screen md:pt-16 lg:w-56 pt-[7vh] bg-stone-950 dark:bg-gray-800/50">
+      <div className="flex flex-col gap-2 lg:justify-between w-12 min-h-screen md:pt-16 lg:w-56 pt-[7vh] bg-white/85 dark:bg-slate-900/60 border-r border-slate-200 dark:border-slate-700 backdrop-blur-md">
         {/* upper  */}
         <div>
           <ul className="flex flex-col gap-3 justify-around w-full items-center p-1">
@@ -22,11 +22,11 @@ const LeftNavbar = () => {
             </li>
 
             <li className="flex flex-row w-full lg:p-3 text-center text-lg items-center gap-2">
-              <div className="hidden lg:block border-2 border-gray-600 rounded-xl h-0 w-full"></div>
-              <NavLink to="/chat" className="text-blue-400 font-semibold">
+              <div className="hidden lg:block border-2 border-slate-300 dark:border-slate-600 rounded-xl h-0 w-full"></div>
+              <NavLink to="/chat" className="text-sky-600 dark:text-sky-400 font-semibold">
                 Chat
               </NavLink>
-              <div className="hidden lg:block border-2 border-gray-600 rounded-xl h-0 w-full"></div>
+              <div className="hidden lg:block border-2 border-slate-300 dark:border-slate-600 rounded-xl h-0 w-full"></div>
             </li>
 
             <li className="w-full">
@@ -51,7 +51,7 @@ const LeftNavbar = () => {
               />
             </li>
 
-            <li className="w-full border-t-4 border-gray-600/60 pt-2">
+            <li className="w-full border-t-2 border-slate-300/80 dark:border-slate-600/60 pt-2">
               <PrimaryButton 
               path="/chat/review" 
               Icon={Star} 
@@ -61,12 +61,12 @@ const LeftNavbar = () => {
         </div>
 
         {/* lower  */}
-        <div className="pb-2 flex flex-col lg:flex-row gap-2 py-3 px-1 border-t-2 border-gray-600 ">
+        <div className="pb-2 flex flex-col lg:flex-row gap-2 py-3 px-1 border-t-2 border-slate-300 dark:border-slate-600">
           {/* profile button */}
           <ProfileButton />
 
           {/* logout button  */}
-          <LogoutButton />
+          <LogoutButton compactOnMobile />
         </div>
       </div>
     </>

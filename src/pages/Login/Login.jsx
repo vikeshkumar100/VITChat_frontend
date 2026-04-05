@@ -15,9 +15,9 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // const isValidVitEmail = (email) => {
-  //   return email.endsWith('@vitstudent.ac.in');
-  // };
+  const isValidVitEmail = (email) => {
+    return email.endsWith('@vitstudent.ac.in');
+  };
 
   const responseGoogle = async (res) => {
     try {
@@ -26,11 +26,11 @@ const Login = () => {
         const { name, email, image } = result.data.user;
         const token = result.data.token;
 
-        // if (!isValidVitEmail(email)) {
-        //   setError("Please use your VIT student email (@vitstudent.ac.in)");
-        //   setIsProcessing(false);
-        //   return;
-        // }
+        if (!isValidVitEmail(email)) {
+          setError("Please use your VIT student email (@vitstudent.ac.in)");
+          setIsProcessing(false);
+          return;
+        }
 
         const user = { name, email, image, token };
         localStorage.setItem("user", JSON.stringify(user));
@@ -57,7 +57,6 @@ const Login = () => {
 
   const handleLoginClick = () => {
     setIsProcessing(true);
-    toast.info("For testing purposes, you can use any email to login. However, for production, only VIT emails will be allowed.");
     handleLogin();
   };
 
@@ -90,9 +89,9 @@ const Login = () => {
       </div>
 
       {/* Login card */}
-      <div className="w-[80vw] md:w-[50vw] flex flex-col gap-8 text-center fixed top-[40vh] left-[50vw] bg-slate-800 px-8 py-4 md:py-6 md:px-16 rounded-xl transform -translate-x-1/2 -translate-y-1/2">
-        <h2 className="text-2xl md:text-5xl text-white">Welcome to VITChat</h2>
-        <div className="text-lg text-gray-400">
+      <div className="w-[90vw] sm:w-[80vw] md:w-[50vw] flex flex-col gap-8 text-center fixed top-[45vh] left-[50vw] bg-white/88 dark:bg-slate-900/85 border border-slate-200 dark:border-slate-700 px-6 py-5 md:py-6 md:px-16 rounded-2xl shadow-2xl backdrop-blur-md transform -translate-x-1/2 -translate-y-1/2">
+        <h2 className="text-2xl md:text-5xl text-slate-900 dark:text-white">Welcome to VITChat</h2>
+        <div className="text-lg text-slate-600 dark:text-slate-300">
           Exclusive to VIT students - Use your institute email
         </div>
         
@@ -101,8 +100,8 @@ const Login = () => {
           disabled={isProcessing}
           className={`flex flex-row items-center justify-center gap-2 p-1 md:p-3 text-base md:text-xl font-semibold rounded-xl shadow-xl transition-all ${
             isProcessing 
-              ? "bg-blue-400 cursor-not-allowed" 
-              : "bg-blue-500 hover:bg-blue-600"
+              ? "bg-sky-400 cursor-not-allowed text-white" 
+              : "bg-sky-600 hover:bg-sky-700 text-white"
           }`}
         >
           <img src={googleLogo} alt="Google Logo" className="w-10 h-10" />
@@ -110,12 +109,12 @@ const Login = () => {
         </button>
 
         {error && (
-          <div className="text-red-400 text-sm mt-2">
+          <div className="text-red-600 dark:text-red-400 text-sm mt-2">
             ⚠️ {error}
           </div>
         )}
 
-        <div className="text-gray-400 text-sm">
+        <div className="text-slate-500 dark:text-slate-300 text-sm">
           Only @vitstudent.ac.in emails allowed
         </div>
       </div>
