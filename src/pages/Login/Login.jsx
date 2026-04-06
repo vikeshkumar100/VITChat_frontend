@@ -90,8 +90,8 @@ const Login = () => {
 
       {/* Login card */}
       <div className="fixed inset-0 pt-20 pb-6 px-4 flex items-center justify-center pointer-events-none">
-        <div className="w-full max-w-lg md:max-w-2xl pointer-events-auto flex flex-col gap-5 md:gap-8 text-center bg-white/90 dark:bg-slate-900/88 border border-slate-200 dark:border-slate-700 px-4 sm:px-6 py-5 md:py-6 md:px-12 rounded-2xl shadow-2xl backdrop-blur-md">
-        <h2 className="text-2xl sm:text-3xl md:text-5xl text-slate-900 dark:text-white">Welcome to VITChat</h2>
+        <div className="w-full max-w-lg md:max-w-2xl pointer-events-auto flex flex-col gap-5 md:gap-8 text-center bg-white/90 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-700 px-4 sm:px-6 py-5 md:py-6 md:px-12 rounded-2xl shadow-2xl dark:shadow-black/40 backdrop-blur-md">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl text-slate-900 dark:text-slate-50">Welcome to VITChat</h2>
         <div className="text-base md:text-lg text-slate-600 dark:text-slate-300">
           Exclusive to VIT students - Use your institute email
         </div>
@@ -115,7 +115,7 @@ const Login = () => {
           </div>
         )}
 
-        <div className="text-slate-500 dark:text-slate-300 text-sm">
+        <div className="text-slate-500 dark:text-slate-400 text-sm">
           Only @vitstudent.ac.in emails allowed
         </div>
         </div>

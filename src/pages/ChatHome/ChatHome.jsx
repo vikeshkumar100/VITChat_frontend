@@ -7,9 +7,9 @@ const ChatHome = () => {
   const [isSplineLoaded, setIsSplineLoaded] = useState(false);
 
   return (
-    <div className="relative w-full min-h-screen pt-14 md:pt-16">
+    <div className="relative flex h-full min-h-0 w-full flex-col overflow-hidden pt-14 md:pt-16 pb-20 md:pb-0">
       {/* Immediate Chat Box - Always visible */}
-      <div className="relative z-[9] mx-4 mt-4 md:mt-8 md:mx-8 md:max-w-lg md:ml-auto text-base md:text-xl bg-gray-700/85 dark:bg-gray-700/30 backdrop-blur-lg p-4 md:p-5 rounded-xl shadow-md text-blue-100 font-sans">
+      <div className="relative z-[9] mx-4 mt-4 md:mt-8 md:mx-8 md:max-w-lg md:ml-auto text-base md:text-xl bg-gray-700/85 dark:bg-gray-700/30 backdrop-blur-lg p-4 md:p-5 rounded-xl shadow-md text-blue-100 font-sans shrink-0">
         <Link
           to="/chat/global-chat"
           className="text-blue-400 hover:text-blue-500 flex items-center gap-2"
@@ -23,13 +23,13 @@ const ChatHome = () => {
       </div>
 
       {/* Spline Container with Loading State */}
-      <div className="flex w-full justify-center items-center h-[50vh] md:h-[75vh] p-2 md:p-4">
-        <div className="hidden md:block w-full h-full">
+      <div className="flex min-h-0 flex-1 w-full items-center justify-center p-2 md:p-4">
+        <div className="hidden md:block relative w-full h-full min-h-0 overflow-hidden rounded-3xl">
           <Suspense fallback={null}>
             <Spline
               scene="https://prod.spline.design/EdkG9NcJg5BcqIQA/scene.splinecode"
               onLoad={() => setIsSplineLoaded(true)}
-              className={`transition-opacity duration-1000 ${
+              className={`h-full w-full transition-opacity duration-1000 ${
                 isSplineLoaded ? "opacity-100" : "opacity-0"
               }`}
             />

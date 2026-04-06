@@ -12,12 +12,26 @@ const getSocketToken = () => {
   }
 };
 
+const getSocketAuth = () => ({ token: getSocketToken() });
+
 const socket = io(SERVER_URL, {
   transports: ["websocket"],
   withCredentials: true,
-  auth: (cb) => {
-    cb({ token: getSocketToken() });
-  },
+  autoConnect: false,
+  auth: getSocketAuth(),
 });
+
+export const connectSocket = () => {
+  socket.auth = getSocketAuth();
+  if (!socket.connected) {
+    socket.connect();
+  }
+};
+
+export const disconnectSocket = () => {
+  if (socket.connected) {
+    socket.disconnect();
+  }
+};
 
 export default socket;

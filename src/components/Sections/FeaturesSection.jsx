@@ -44,7 +44,7 @@ const FeaturesSection = () => {
       <h2 className="text-3xl md:text-6xl font-bold bg-blue-500 p-3 w-full text-center rounded-xl text-white">
         Features You’ll Love
       </h2>
-      <div className="flex flex-row flex-wrap items-stretch justify-center gap-6 md:gap-10 w-full max-w-7xl">
+      <div className="grid w-full max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4 md:gap-8">
         <FeaturesCard
           route="/chat/global-chat"
           icon="🌍"
