@@ -429,7 +429,7 @@ const Chatbot = () => {
 
       {/* Show suggestions button (if chat has started) */}
       {!showSuggestions && chat.length > 0 && (
-        <div className="w-full flex justify-center bg-white/80 dark:bg-slate-950/70">
+        <div className="sticky bottom-0 z-10 w-full flex justify-center bg-white/80 dark:bg-slate-950/70">
           <button
             onClick={() => setShowSuggestions(true)}
             className="my-1 md:my-2 px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm text-cyan-600 dark:text-cyan-400 hover:underline"
@@ -441,7 +441,7 @@ const Chatbot = () => {
 
       {/* Quick suggestions (when enabled) */}
       {showSuggestions && chat.length > 0 && (
-        <div className="w-full bg-white/90 dark:bg-slate-950/80 p-2 md:p-3 border-t border-cyan-100 dark:border-slate-800">
+        <div className="sticky bottom-0 z-10 w-full bg-white/90 dark:bg-slate-950/80 p-2 md:p-3 border-t border-cyan-100 dark:border-slate-800">
           <div className="flex gap-2 overflow-x-auto md:flex-wrap md:justify-center md:overflow-visible pb-1">
             {quickSuggestions.map((suggestion, index) => (
               <button
