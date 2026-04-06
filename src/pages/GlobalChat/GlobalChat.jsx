@@ -14,18 +14,31 @@ const GlobalChat = () => {
   const apiurl = import.meta.env.VITE_API_URL;
 
   const storedUser = JSON.parse(localStorage.getItem("user")) || {};
+  const authToken = storedUser?.token || "";
   const [user] = useState({
     id: storedUser.email || "",
     name: storedUser.name || "Guest",
     profilePic: storedUser.image || "",
   });
 
+  const formatMessageTime = (msg) => {
+    const candidate = Number(msg?.timestamp);
+    if (Number.isFinite(candidate)) {
+      return new Date(candidate).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    }
+
+    return msg?.time || "";
+  };
+
   useEffect(() => {
     const fetchRegisteredUsers = async () => {
       try {
         const res = await axios.get(`${apiurl}/users/registered-users`, {
           headers: {
-            Authorization: `Bearer ${storedUser.token}`,
+            Authorization: `Bearer ${authToken}`,
           },
         });
         setRegisteredUsers(res.data.registeredUsers);
@@ -80,7 +93,7 @@ const GlobalChat = () => {
       socket.off("receiveMessage", handleNewMessage);
       socket.off("activeUsers");
     };
-  }, [apiurl]);
+  }, [apiurl, authToken]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -208,7 +221,7 @@ const GlobalChat = () => {
                   >
                     <div className="flex items-center justify-between gap-4 mb-2">
                       <span className="text-xs md:text-sm font-semibold">{msg.name}</span>
-                      <span className="text-xs opacity-80">{msg.time}</span>
+                      <span className="text-xs opacity-80">{formatMessageTime(msg)}</span>
                     </div>
                     <p className="text-xs md:text-sm leading-relaxed whitespace-pre-wrap break-words">
                       {msg.text}
