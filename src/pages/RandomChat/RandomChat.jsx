@@ -239,7 +239,7 @@ const RandomChat = () => {
       </div>
 
       {status === "connected" ? (
-        <div className="bg-white/95 dark:bg-slate-950/80 backdrop-blur border-t border-sky-100 dark:border-slate-800 w-full p-2.5">
+        <div className="sticky bottom-0 z-10 bg-white/95 dark:bg-slate-950/80 backdrop-blur border-t border-sky-100 dark:border-slate-800 w-full p-2.5 pb-[env(safe-area-inset-bottom)]">
           <div className="w-full rounded-2xl border border-sky-200 dark:border-slate-700 bg-sky-50/80 dark:bg-slate-900 p-1.5 flex items-center gap-2">
             <input
               type="text"
@@ -259,7 +259,7 @@ const RandomChat = () => {
           </div>
         </div>
       ) : (
-        <div className="p-3 bg-white/95 dark:bg-slate-950/80 backdrop-blur border-t border-sky-100 dark:border-slate-800">
+        <div className="sticky bottom-0 z-10 p-3 bg-white/95 dark:bg-slate-950/80 backdrop-blur border-t border-sky-100 dark:border-slate-800 pb-[env(safe-area-inset-bottom)]">
           <button
             onClick={startRandomChat}
             disabled={status === "searching"}

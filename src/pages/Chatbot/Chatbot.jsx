@@ -429,7 +429,7 @@ const Chatbot = () => {
 
       {/* Show suggestions button (if chat has started) */}
       {!showSuggestions && chat.length > 0 && (
-        <div className="w-full flex justify-center bg-white/80 dark:bg-slate-950/70">
+        <div className="sticky bottom-0 z-10 w-full flex justify-center bg-white/80 dark:bg-slate-950/70">
           <button
             onClick={() => setShowSuggestions(true)}
             className="my-1 md:my-2 px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm text-cyan-600 dark:text-cyan-400 hover:underline"
@@ -441,7 +441,7 @@ const Chatbot = () => {
 
       {/* Quick suggestions (when enabled) */}
       {showSuggestions && chat.length > 0 && (
-        <div className="w-full bg-white/90 dark:bg-slate-950/80 p-2 md:p-3 border-t border-cyan-100 dark:border-slate-800">
+        <div className="sticky bottom-0 z-10 w-full bg-white/90 dark:bg-slate-950/80 p-2 md:p-3 border-t border-cyan-100 dark:border-slate-800">
           <div className="flex gap-2 overflow-x-auto md:flex-wrap md:justify-center md:overflow-visible pb-1">
             {quickSuggestions.map((suggestion, index) => (
               <button
@@ -457,7 +457,7 @@ const Chatbot = () => {
       )}
 
       {/* Input area */}
-      <div className="bg-white/95 dark:bg-slate-950/85 backdrop-blur border-t border-cyan-100 dark:border-slate-800 p-2.5 md:p-2">
+      <div className="sticky bottom-0 z-10 bg-white/95 dark:bg-slate-950/85 backdrop-blur border-t border-cyan-100 dark:border-slate-800 p-2.5 md:p-2 pb-[env(safe-area-inset-bottom)]">
         <div className="flex items-center max-w-4xl mx-auto rounded-2xl border border-cyan-200 dark:border-slate-700 bg-cyan-50/90 dark:bg-slate-900 p-1.5">
           <textarea
             className="flex-1 bg-transparent py-2 px-2.5 md:px-3 focus:outline-none text-slate-800 dark:text-white resize-none text-base md:text-base placeholder:text-slate-400"

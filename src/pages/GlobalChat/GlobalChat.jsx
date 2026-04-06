@@ -236,7 +236,7 @@ const GlobalChat = () => {
       </div>
 
       {/* Input Area */}
-      <div className="bg-gray-300 dark:bg-gray-800 border-t dark:border-gray-700 w-full">
+      <div className="sticky bottom-0 z-10 bg-gray-300 dark:bg-gray-800 border-t dark:border-gray-700 w-full pb-[env(safe-area-inset-bottom)]">
         <div className="mx-auto p-2">
           <div className="relative w-full group">
             <input
