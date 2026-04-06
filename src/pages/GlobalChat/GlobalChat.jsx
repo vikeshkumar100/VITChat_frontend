@@ -126,7 +126,7 @@ const GlobalChat = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100svh-3.5rem-4rem)] md:h-[calc(100dvh-4rem)] w-full mt-14 md:mt-16 min-h-0">
+    <div className="flex flex-col h-[calc(100dvh-3.5rem)] md:h-[calc(100dvh-4rem)] w-full mt-14 md:mt-16 min-h-0">
       {/* Chat Header */}
       <div className="px-2 md:px-4 py-2 bg-white dark:bg-gray-800 border-b dark:border-gray-700 shadow-sm">
         <div className="flex items-center justify-between w-full px-2 md:px-4 max-w-7xl mx-auto gap-2">
@@ -166,7 +166,7 @@ const GlobalChat = () => {
       </div>
 
       {/* Messages Container */}
-      <div className="flex-1 min-h-0 overflow-y-auto px-3 md:px-4 py-4 md:py-6 w-full">
+      <div className="flex-1 min-h-0 overflow-y-auto px-3 md:px-4 py-4 pb-32 md:py-6 w-full">
         {isHistoryLoading ? (
           <div className="h-full flex flex-col items-center justify-center text-center p-8">
             <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-2">
@@ -236,7 +236,7 @@ const GlobalChat = () => {
       </div>
 
       {/* Input Area */}
-      <div className="bg-gray-300 dark:bg-gray-800 border-t dark:border-gray-700 w-full">
+      <div className="fixed left-0 right-0 bottom-[var(--mobile-nav-height)] md:sticky md:bottom-0 z-30 bg-gray-300 dark:bg-gray-800 border-t dark:border-gray-700 w-full pb-[env(safe-area-inset-bottom)] md:pb-0">
         <div className="mx-auto p-2">
           <div className="relative w-full group">
             <input

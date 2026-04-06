@@ -6,6 +6,7 @@
 
 @layer base {
   :root {
+    --mobile-nav-height: 5.5rem;
     --background: 210 33% 98%;
     --foreground: 220 40% 14%;
     --card: 0 0% 100%;

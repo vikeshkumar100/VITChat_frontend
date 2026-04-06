@@ -13,7 +13,7 @@ import ProfileButton from "../Buttons/ProfileButton";
 const LeftNavbar = () => {
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 z-20 flex items-center justify-between px-2 py-2 md:static md:z-auto md:w-14 lg:w-56 md:min-h-screen md:pt-16 md:flex-col md:justify-between md:gap-2 md:px-1 md:py-0 bg-white/95 dark:bg-slate-900/95 md:bg-white/85 md:dark:bg-slate-900/60 border-t md:border-t-0 md:border-r border-slate-200 dark:border-slate-700 backdrop-blur-md">
+      <div className="fixed bottom-0 left-0 right-0 z-20 h-[var(--mobile-nav-height)] flex items-center justify-between px-2 py-2 md:static md:z-auto md:h-auto md:w-14 lg:w-56 md:min-h-screen md:pt-16 md:flex-col md:justify-between md:gap-2 md:px-1 md:py-0 bg-white/95 dark:bg-slate-900/95 md:bg-white/85 md:dark:bg-slate-900/60 border-t md:border-t-0 md:border-r border-slate-200 dark:border-slate-700 backdrop-blur-md">
         {/* upper  */}
         <div className="w-full">
           <ul className="flex w-full items-center justify-between gap-1 md:flex-col md:gap-3 md:justify-around md:p-1">

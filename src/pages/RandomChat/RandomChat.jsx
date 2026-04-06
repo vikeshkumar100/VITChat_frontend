@@ -95,7 +95,7 @@ const RandomChat = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100svh-3.5rem-4rem)] md:h-[calc(100dvh-4rem)] w-full mt-14 md:mt-16 min-h-0 bg-gradient-to-b from-sky-50/70 to-white dark:from-slate-900 dark:to-slate-950">
+    <div className="flex flex-col h-[calc(100dvh-3.5rem)] md:h-[calc(100dvh-4rem)] w-full mt-14 md:mt-16 min-h-0 bg-gradient-to-b from-sky-50/70 to-white dark:from-slate-900 dark:to-slate-950">
       <div className="px-3 py-2 border-b border-sky-100 dark:border-slate-800 bg-white/90 dark:bg-slate-950/70 backdrop-blur-md">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0">
@@ -156,7 +156,7 @@ const RandomChat = () => {
         )}
       </div>
 
-      <div className="flex-1 min-h-0 overflow-y-auto w-full px-3 md:px-4 py-4 md:py-6">
+      <div className="flex-1 min-h-0 overflow-y-auto w-full px-3 md:px-4 py-4 pb-32 md:py-6">
         {status === "searching" ? (
           <div className="h-full grid place-items-center">
             <div className="w-full max-w-sm rounded-2xl border border-sky-100 dark:border-slate-800 bg-white/90 dark:bg-slate-900/80 p-5 text-center shadow-sm">
@@ -239,7 +239,7 @@ const RandomChat = () => {
       </div>
 
       {status === "connected" ? (
-        <div className="bg-white/95 dark:bg-slate-950/80 backdrop-blur border-t border-sky-100 dark:border-slate-800 w-full p-2.5">
+        <div className="fixed left-0 right-0 bottom-[var(--mobile-nav-height)] md:sticky md:bottom-0 z-30 bg-white/95 dark:bg-slate-950/80 backdrop-blur border-t border-sky-100 dark:border-slate-800 w-full p-2.5 pb-[env(safe-area-inset-bottom)] md:pb-2.5">
           <div className="w-full rounded-2xl border border-sky-200 dark:border-slate-700 bg-sky-50/80 dark:bg-slate-900 p-1.5 flex items-center gap-2">
             <input
               type="text"
@@ -259,7 +259,7 @@ const RandomChat = () => {
           </div>
         </div>
       ) : (
-        <div className="p-3 bg-white/95 dark:bg-slate-950/80 backdrop-blur border-t border-sky-100 dark:border-slate-800">
+        <div className="fixed left-0 right-0 bottom-[var(--mobile-nav-height)] md:sticky md:bottom-0 z-30 p-3 bg-white/95 dark:bg-slate-950/80 backdrop-blur border-t border-sky-100 dark:border-slate-800 pb-[env(safe-area-inset-bottom)] md:pb-3">
           <button
             onClick={startRandomChat}
             disabled={status === "searching"}
