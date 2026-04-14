@@ -3,6 +3,7 @@ import socket from "../../lib/socket";
 import axios from "axios";
 import { MessageCircle, Send, Users, Bird } from "lucide-react";
 import { NumberTicker } from "../../components/magicui/number-ticker";
+import { getStoredUser, logoutIfAuthError } from "@/lib/auth";
 
 const GlobalChat = () => {
   const [message, setMessage] = useState("");
@@ -13,7 +14,7 @@ const GlobalChat = () => {
   const messagesEndRef = useRef(null);
   const apiurl = import.meta.env.VITE_API_URL;
 
-  const storedUser = JSON.parse(localStorage.getItem("user")) || {};
+  const storedUser = getStoredUser() || {};
   const authToken = storedUser?.token || "";
   const [user] = useState({
     id: storedUser.email || "",
@@ -43,6 +44,7 @@ const GlobalChat = () => {
         });
         setRegisteredUsers(res.data.registeredUsers);
       } catch (err) {
+        if (logoutIfAuthError(err)) return;
         console.error("Error fetching registered users:", err);
       }
     };

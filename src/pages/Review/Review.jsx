@@ -10,6 +10,7 @@ import {
 import { Button } from "../../components/ui/button";
 import { Link } from "react-router-dom";
 import { ThumbsUp, Wrench, BarChart3, MessageSquareText } from "lucide-react";
+import { getStoredUser, isSessionValid, logoutIfAuthError } from "@/lib/auth";
 
 // superb memes
 import happycat from "../../assets/images/happycat.jpeg";
@@ -50,8 +51,8 @@ const Review = () => {
   const [reviewComment, setReviewComment] = useState("");
 
   const apiurl = import.meta.env.VITE_API_URL;
-  const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
-  const isAuthenticated = Boolean(storedUser?.token);
+  const storedUser = getStoredUser() || {};
+  const isAuthenticated = isSessionValid();
 
   const reviewOptions = useMemo(
     () => ({
@@ -82,6 +83,7 @@ const Review = () => {
       setStats(res.data?.stats || emptyStats);
       setPageError("");
     } catch (error) {
+      if (logoutIfAuthError(error)) return;
       setPageError("Unable to load review stats right now.");
     } finally {
       setIsStatsLoading(false);
@@ -147,6 +149,7 @@ const Review = () => {
           : "Thanks! Your improvement feedback was saved."
       );
     } catch (error) {
+      if (logoutIfAuthError(error)) return;
       setDrawerError(error?.response?.data?.message || "Could not save your review. Please try again.");
     } finally {
       setIsSubmitting(false);

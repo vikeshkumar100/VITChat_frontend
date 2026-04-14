@@ -7,10 +7,11 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { googleauth } from "@/api/login";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { isSessionValid, logoutUser } from "@/lib/auth";
 
 const Login = () => {
   const [isAuthenticated, setisAuthenticated] = useState(
-    localStorage.getItem("user") !== null
+    isSessionValid()
   );
   const [error, setError] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -59,6 +60,13 @@ const Login = () => {
     setIsProcessing(true);
     handleLogin();
   };
+
+  React.useEffect(() => {
+    if (!isSessionValid()) {
+      logoutUser({ redirectTo: "/login" });
+      setisAuthenticated(false);
+    }
+  }, []);
 
   if (isAuthenticated) {
     return <Navigate to="/chat" />;

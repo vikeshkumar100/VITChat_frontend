@@ -1,6 +1,7 @@
 import { LogOut } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { logoutUser } from "@/lib/auth";
 
 import {
   AlertDialog,
@@ -17,9 +18,8 @@ const LogoutButton = ({ className = "", onAction, compactOnMobile = false }) => 
   const navigate = useNavigate();
   
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    logoutUser({ navigate });
     if (onAction) onAction();
-    navigate("/login");
   };
 
   const triggerClassName = `flex w-full items-center rounded-md bg-red-600/70 text-sm text-white hover:bg-red-700/80 overflow-hidden ${

@@ -1,4 +1,5 @@
 import { io } from "socket.io-client";
+import { logoutUser } from "@/lib/auth";
 
 const SERVER_URL =
   import.meta.env.VITE_API_URL || "https://vitchat.onrender.com";
@@ -19,6 +20,13 @@ const socket = io(SERVER_URL, {
   withCredentials: true,
   autoConnect: false,
   auth: getSocketAuth(),
+});
+
+socket.on("connect_error", (error) => {
+  const message = String(error?.message || "").toLowerCase();
+  if (message.includes("unauthorized") || message.includes("token")) {
+    logoutUser();
+  }
 });
 
 export const connectSocket = () => {
